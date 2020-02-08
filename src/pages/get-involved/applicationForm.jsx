@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import BasicInformation from "./basic-information/basicInformation";
-import ReferenceInformation from "./references/references";
+import BasicInformation from "../get-involved/basicInformation/basic-information/basicInformation";
+import ReferenceInformation from "../get-involved/referenceInformation/references/references";
 import Grid from "@material-ui/core/Grid";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
-import Experience from "./education-and-experience/experience";
-import Screening from "./screening/screening";
+import Experience from "../get-involved/experienceInformation/education-and-experience/experience";
+import Screening from "../get-involved/screeningInformation/screening/screening";
 import { Stepper, Step, StepLabel, Container } from "@material-ui/core";
 import VolunteerDetailsSummary from "./volunteerDetailsSummary";
 

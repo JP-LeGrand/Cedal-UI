@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ReferenceComponent from "./referenceComponent";
-import VerticalLinearStepper from "../../../shared/components/navigation-bar/verticalStepper";
+import VerticalLinearStepper from "../../../../shared/components/navigation-bar/verticalStepper";
 
 function getSteps() {
   return ["Reference Details"];

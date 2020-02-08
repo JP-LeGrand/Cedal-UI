@@ -34,7 +34,6 @@ export default function CedalEventCard(props) {
                     <CardHeader
                         title={evt.name}
                         subheader={evt.date}
-                        clic
                     />
                     <CardMedia
                         className={classes.media}
