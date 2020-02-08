@@ -1,5 +1,14 @@
-const InitialState = {
-    HomePageDetails: {}
+export default {
+  homePageDetails: {},
+  volunteerDetails: {
+    basicInformation: {},
+    experienceInformation: {},
+    referenceInformation: {},
+    screeningInformation: {},
+    volunteers: []
+  },
+  eventDetails: {
+    eventInformation: {},
+    cedalEvents: []
+  }
 };
-
-export default InitialState;
