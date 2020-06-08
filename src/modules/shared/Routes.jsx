@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "../../pages/home/Home";
-import GetInvolved from "../../pages/get-involved/getInvolved";
-import ApplicationForm from "../../pages/get-involved/applicationForm";
+import GetInvolved from "../../pages/GetInvolved/GetInvolved";
+import ApplicationForm from "../../pages/GetInvolved/ApplicationForm";
 import EventsAndNews from "../../pages/events-and-news/events";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 

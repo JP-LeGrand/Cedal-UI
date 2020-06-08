@@ -1,5 +1,5 @@
 import InitialState from "../../modules/redux/InitialState";
-import * as Types from "./volunteerActionTypes";
+import * as Types from "./VolunteerActionTypes";
 
 const HomeReducer = (
     state = InitialState.volunteerDetails, action) => {
