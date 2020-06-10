@@ -1,14 +1,12 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-    FormControlLabel,
-    FormLabel,
-    RadioGroup,
-    Radio,
-    Grid,
-    TextField
-} from "@material-ui/core";
+import React, {useEffect, useRef} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import moment from 'moment';
+import MomentUtils from "@date-io/moment";
+import {connect} from 'react-redux';
+import {validateFirstName, validateInput} from "../../../../shared/helpers/Validators";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -64,9 +62,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function BiographicalInformation() {
+function BiographicalInformation(props) {
     const classes = useStyles()
-    const [state] = React.useState({
+    const [state,setState] = React.useState({
         firstName: '',
         firstNameError: false,
         firstNameErrorMessage: '',
@@ -85,7 +83,94 @@ function BiographicalInformation() {
         emailAddress: '',
         emailAddressError: false,
         emailAddressErrorMessage: '',
+        maritalStatus: 0,
+        maritalStatusError: false,
+        maritalStatusErrorMessage: '',
     });
+
+    const mounted = useRef()
+    useEffect(() => {
+        const {personalInformationRef}=props
+        if (!mounted.current) {
+            personalInformationRef(this)
+        }
+    });
+
+    const handleChange = name => event => {
+        setState({
+            [name]: event.target.value,
+            [`${name}Error`]: false,
+            [`${name}ErrorMessage`]: ''
+        })
+    }
+
+    const handleDateChange = (date, name) => {
+        setState({
+            [name]: date ? moment(date).format("MM/DD/YYYY") : null,
+            [`${name}Error`]: false,
+            [`${name}ErrorMessage`]: ''
+        })
+    }
+
+    const validateBiographicalInformation=()=>{
+        let firstNameErrorMessage, lastNameErrorMessage,
+            identityNumberErrorMessage, dateOfBirthErrorMessage, contactNumberErrorMessage,
+            emailAddressErrorMessage, maritalStatusErrorMessage
+
+        const firstNameError = !validateFirstName(state?.firstName??'')
+        const lastNameError = !validateFirstName(state?.lastName??'')
+        const identityNumberError = !validateInput(state?.identityNumber??'')
+        const dateOfBirthError= !state.dateOfBirth
+        const contactNumberError = !validateInput(state?.contactNumber??'')
+        const emailAddressError = !validateInput(state?.emailAddress??'')
+        const maritalStatusError = state?.maritalStatus!==0
+
+        if(firstNameError){
+            firstNameErrorMessage='First name is required'
+        }else{
+            firstNameErrorMessage=''
+        }
+        if(lastNameError){
+            lastNameErrorMessage='Last name is required'
+        }else{
+            lastNameErrorMessage=''
+        }
+        if(identityNumberError){
+            identityNumberErrorMessage='Identity number is required'
+        }else{
+            identityNumberErrorMessage=''
+        }
+        if(dateOfBirthError){
+            dateOfBirthErrorMessage='Date of birth is required'
+        }else{
+            dateOfBirthErrorMessage=''
+        }
+        if(contactNumberError){
+            contactNumberErrorMessage='Contact number is required'
+        }else{
+            contactNumberErrorMessage=''
+        }
+        if(emailAddressError){
+            emailAddressErrorMessage='Email address is required'
+        }else{
+            emailAddressErrorMessage=''
+        }
+        if(maritalStatusError){
+            maritalStatusErrorMessage='Email address is required'
+        }else{
+            maritalStatusErrorMessage=''
+        }
+
+        setState({
+            maritalStatusError, maritalStatusErrorMessage, emailAddressError, emailAddressErrorMessage,
+            contactNumberError, contactNumberErrorMessage, lastNameError, lastNameErrorMessage,
+            identityNumberError, identityNumberErrorMessage, firstNameError, firstNameErrorMessage,
+            dateOfBirthError, dateOfBirthErrorMessage
+        })
+
+        return !(firstNameError || lastNameError || identityNumberError
+            || contactNumberError || emailAddressError || dateOfBirthError || maritalStatusError)
+    }
 
     return (
         <Grid container justify="center" spacing={1}>
@@ -97,6 +182,8 @@ function BiographicalInformation() {
                         label={'First Name'}
                         value={state.firstName}
                         error={state.firstNameError}
+                        onChange={handleChange('firstName')}
+                        helperText={state.firstNameErrorMessage}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -105,15 +192,36 @@ function BiographicalInformation() {
                         className={classes.textField}
                         label={'Last Name'}
                         value={state.lastName}
-                        error={state.lastNameError}/>
+                        error={state.lastNameError}
+                        onChange={handleChange('lastName')}
+                        helperText={state.lastNameErrorMessage}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        id="contactNumber"
-                        className={classes.textField}
-                        label={'Contact Number'}
-                        value={state.contactNumber}
-                        error={state.contactNumberError}/>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardDatePicker
+                            id={'dateOfBirth'}
+                            clearable
+                            margin="normal"
+                            autoOk
+                            value={state.dateOfBirth}
+                            label="Date of birth"
+                            placeholder={"DD/MM/YYYY"}
+                            openTo='year'
+                            className={classes.textField}
+                            disableFuture={true}
+                            format={"DD/MM/YYYY"}
+                            invalidDateMessage={"Please enter a valid date (dd/mm/yyyy)"}
+                            invalidLabel=""
+                            maskChar=" "
+                            onChange={(date)=>handleDateChange(date,'dateOfBirth')}
+                            error={state.dateOfBirthError}
+                            helperText={state.dateOfBirthErrorMessage}
+                            InputProps={{
+                                error: state.dateOfBirthError,
+                                helperText: state.dateOfBirthErrorMessage,
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -121,7 +229,9 @@ function BiographicalInformation() {
                         className={classes.textField}
                         label={'Contact Number'}
                     value={state.contactNumber}
-                    error={state.contactNumberError}/>
+                    error={state.contactNumberError}
+                        onChange={handleChange('contactNumber')}
+                    helperText={state.contactNumberErrorMessage}/>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -131,6 +241,8 @@ function BiographicalInformation() {
                         label ={'Email Address'}
                         value={state.emailAddress}
                         error={state.emailAddressError}
+                        onChange={handleChange('emailAddress')}
+                        helperText={state.emailAddressErrorMessage}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -139,31 +251,36 @@ function BiographicalInformation() {
                                className={classes.textField}
                                label={'Identity Number'}
                     value={state.identityNumber}
-                    error={state.identityNumberError}/>
+                    error={state.identityNumberError}
+                        onChange={handleChange('identityNumber')}
+                    helperText={state.identityNumberErrorMessage}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <FormLabel component="legend">Marital Status</FormLabel>
-                    <RadioGroup
-                        defaultValue="Marital Status"
-                        aria-label="Marital Status"
-                        name="customized-radios"
-                    >
-                        <FormControlLabel
-                            value="1"
-                            control={<StyledRadio />}
-                            label="Single"
-                        />
-                        <FormControlLabel
-                            value="2"
-                            control={<StyledRadio />}
-                            label="Married"
-                        />
-                        <FormControlLabel
-                            value="3"
-                            control={<StyledRadio />}
-                            label="Divorced"
-                        />
-                    </RadioGroup>
+                    <FormControl style={{margin:'15px 0'}}>
+                        <FormLabel component="legend">Marital Status</FormLabel>
+                        <RadioGroup
+                            defaultValue="Marital Status"
+                            aria-label="Marital Status"
+                            name="customized-radios"
+                            onChange={handleChange('maritalStatus')}
+                        >
+                            <FormControlLabel
+                                value="1"
+                                control={<StyledRadio />}
+                                label="Single"
+                            />
+                            <FormControlLabel
+                                value="2"
+                                control={<StyledRadio />}
+                                label="Married"
+                            />
+                            <FormControlLabel
+                                value="3"
+                                control={<StyledRadio />}
+                                label="Divorced"
+                            />
+                        </RadioGroup>
+                    </FormControl>
                 </Grid>
             </Grid>
         </Grid>
@@ -172,7 +289,6 @@ function BiographicalInformation() {
 
 function StyledRadio(props) {
     const classes = useStyles();
-
     return (
         <Radio
             className={classes.rootRadio}
@@ -186,7 +302,16 @@ function StyledRadio(props) {
 }
 
 BiographicalInformation.propTypes={
-    classes:PropTypes.object
+    classes:PropTypes.object,
+    personalInformation:PropTypes.object,
+    personalInformationRef:PropTypes.func
 }
 
-export default BiographicalInformation
+export const mapStateToProps = (state) => {
+    const personalInformation = state.volunteerDetails.personalInformation
+    return {
+        personalInformation: personalInformation
+    }
+}
+
+export default connect(mapStateToProps)(BiographicalInformation)

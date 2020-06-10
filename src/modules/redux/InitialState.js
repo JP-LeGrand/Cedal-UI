@@ -1,7 +1,9 @@
 export default {
   homePageDetails: {},
   volunteerDetails: {
-    basicInformation: {},
+    personalInformation: {
+      biographicalInformation:{}
+    },
     experienceInformation: {},
     referenceInformation: {},
     screeningInformation: {},

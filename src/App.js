@@ -13,9 +13,9 @@ function App() {
   return (
     <Provider store={createAppState()}>
       <MuiThemeProvider theme={muiTheme}>
-        <Router history={history}>
-          <Routes />
-        </Router>
+              <Router history={history}>
+                  <Routes />
+              </Router>
       </MuiThemeProvider>
     </Provider>
   );

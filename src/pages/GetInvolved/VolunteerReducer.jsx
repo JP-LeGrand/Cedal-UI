@@ -1,37 +1,36 @@
 import InitialState from "../../modules/redux/InitialState";
 import * as Types from "./VolunteerActionTypes";
 
-const HomeReducer = (
-    state = InitialState.volunteerDetails, action) => {
+const VolunteerReducer = (state = InitialState.volunteerDetails, action) => {
     switch (action.type) {
         case Types.GET_VOLUNTEERS:
             return {
                 ...state.volunteers,
-                volunteers: state.volunteers.concat(action.payload)
+                volunteers: state.volunteers.concat(action.data)
             };
-        case Types.STORE_BASIC_INFORMATION:
+        case Types.STORE_PERSONAL_INFORMATION:
             return {
-                ...state.basicInformation,
-                ...action.payload
+                ...state,
+                personalInformation:action.data
             };
         case Types.STORE_EXPERIENCE_INFORMATION:
             return {
-                ...state.experienceInformation,
-                ...action.payload
+                ...state,
+                experienceInformation:action.data
             };
         case Types.STORE_REFERENCE_INFORMATION:
             return {
-                ...state.referenceInformation,
-                ...action.payload
+                ...state,
+                referenceInformation:action.data
             };
         case Types.STORE_SCREENING_INFROMATION:
             return {
-                ...state.screeningInformation,
-                ...action.payload
+                ...state,
+                screeningInformation:action.data
             };
         default:
             return state;
     }
 };
 
-export default HomeReducer;
+export default VolunteerReducer;
