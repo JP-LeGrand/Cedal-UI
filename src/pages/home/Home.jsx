@@ -1,30 +1,29 @@
-import React  from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Button from '@material-ui/core/Button';
-import NavigationBar from "../components/navigation-bar/Navigation_Bar"
+import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
+import Grid from "@material-ui/core/Grid";
+
 class Home extends React.Component {
   render() {
     return (
       <div>
-        <NavigationBar></NavigationBar>
+        <Grid container>
+          <Grid item xs={12}>
+            <NavigationBar homeIsActive={true}></NavigationBar>
+            This is the Home page
+          </Grid>
+        </Grid>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-    numberOfVolunteers: state.HomePageDetails.numberOfVolunteers,
-    numberOfOrganisationsAssisted: state.HomePageDetails.numberOfOrganisationsAssisted
+  numberOfVolunteers: state.homePageDetails.numberOfVolunteers,
+  numberOfOrganisationsAssisted:
+    state.homePageDetails.numberOfOrganisationsAssisted
 });
 
-const mapDispatchToProps = dispatch => ({
-    
-});
+const mapDispatchToProps = dispatch => ({});
 
-export default
- connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
-(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

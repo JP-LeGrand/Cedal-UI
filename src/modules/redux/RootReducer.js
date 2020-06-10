@@ -1,8 +1,12 @@
-import HomeReducer from '../../pages/home/HomeReducer';
-import { combineReducers } from 'redux';
+import HomeReducer from "../../pages/home/HomeReducer";
+import EventsReducer from "../../pages/events-and-news/eventsReducer";
+import VolunteerReducer from "../../pages/GetInvolved/VolunteerReducer";
+import { combineReducers } from "redux";
 
 const RootReducer = combineReducers({
-    HomePageDetails: HomeReducer
+  homePageDetails: HomeReducer,
+  volunteerDetails: VolunteerReducer,
+  eventDetails: EventsReducer
 });
 
 export default RootReducer;
