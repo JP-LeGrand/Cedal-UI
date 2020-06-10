@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { FormControl, TextareaAutosize } from "@material-ui/core";
 

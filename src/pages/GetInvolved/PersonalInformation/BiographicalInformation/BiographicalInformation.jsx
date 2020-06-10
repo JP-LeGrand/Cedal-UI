@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 
 function BiographicalInformation() {
     const classes = useStyles()
-    const [state, setState] = React.useState({
+    const [state] = React.useState({
         firstName: '',
         firstNameError: false,
         firstNameErrorMessage: '',
