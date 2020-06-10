@@ -6,8 +6,6 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import * as Themes from "./shared/styles/themes/theme";
 import { Router } from "react-router-dom";
 import history from "./history";
-import {MuiPickersUtilsProvider} from "@material-ui/pickers";
-import MomentUtils from '@date-io/moment'
 
 const muiTheme = Themes.getTheme();
 
@@ -15,11 +13,9 @@ function App() {
   return (
     <Provider store={createAppState()}>
       <MuiThemeProvider theme={muiTheme}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
         <Router history={history}>
           <Routes />
         </Router>
-          </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     </Provider>
   );

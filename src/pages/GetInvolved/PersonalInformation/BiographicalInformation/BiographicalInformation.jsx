@@ -9,7 +9,6 @@ import {
     TextField
 } from "@material-ui/core";
 import PropTypes from "prop-types";
-import { KeyboardDatePicker } from '@material-ui/pickers'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -109,28 +108,12 @@ function BiographicalInformation() {
                         error={state.lastNameError}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <KeyboardDatePicker
-                        id={'dateOfBirth'}
-                        clearable
-                        margin="normal"
-                        autoOk
-                        value={state.dateOfBirth}
-                        label="Date of birth"
-                        placeholder={"DD/MM/YYYY"}
-                        openTo='year'
+                    <TextField
+                        id="contactNumber"
                         className={classes.textField}
-                        disableFuture={true}
-                        format={"DD/MM/YYYY"}
-                        invalidDateMessage={"Please enter a valid date (dd/mm/yyyy)"}
-                        invalidLabel=""
-                        maskChar=" "
-                        error={state.dateOfBirthError}
-                        helperText={state.dateOfBirthErrorMessage}
-                        InputProps={{
-                            error: state.dateOfBirthError,
-                            helperText: state.dateOfBirthErrorMessage,
-                        }}
-                    />
+                        label={'Contact Number'}
+                        value={state.contactNumber}
+                        error={state.contactNumberError}/>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
