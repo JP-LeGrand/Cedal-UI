@@ -1,11 +1,11 @@
 import HomeReducer from "../../pages/home/HomeReducer";
 import EventsReducer from "../../pages/events-and-news/eventsReducer";
-import VolunteeeReducer from "../../pages/GetInvolved/VolunteerReducer";
+import VolunteerReducer from "../../pages/GetInvolved/VolunteerReducer";
 import { combineReducers } from "redux";
 
 const RootReducer = combineReducers({
   homePageDetails: HomeReducer,
-  volunteerDetails: VolunteeeReducer,
+  volunteerDetails: VolunteerReducer,
   eventDetails: EventsReducer
 });
 
