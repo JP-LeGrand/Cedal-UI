@@ -4,11 +4,13 @@ import { buttons } from "./buttons";
 import { palette } from "./palette";
 import { containers } from "./container";
 import { paper } from "./paper";
+import { typography } from "./typography";
 const siteThemeSettings = {
   paper,
   buttons,
   palette,
   containers,
+  typography,
   colors: {
     white: Colors.white,
     ebony: Colors.ebony,
@@ -19,7 +21,6 @@ const siteThemeSettings = {
     athensGray: Colors.athensGray,
     alizarinCrimson: Colors.alizarinCrimson,
     stratos: Colors.stratos,
-    Zumthor: Colors.Zumthor,
     slateGray: Colors.slateGray,
     burningOrange: Colors.burningOrange,
     mantis: Colors.mantis,

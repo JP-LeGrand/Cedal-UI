@@ -19,7 +19,7 @@ class Routes extends React.Component {
           <Route path="/ApplicationForm" exact component={ApplicationForm} />
         </Switch>
         <Switch>
-          <Route path="/Events-And-News" exact component={EventsAndNews} />
+          <Route path="/EventsAndNews" exact component={EventsAndNews} />
         </Switch>
       </BrowserRouter>
     );
