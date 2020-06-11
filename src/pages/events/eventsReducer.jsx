@@ -1,5 +1,5 @@
 import InitialState from "../../modules/redux/InitialState";
-import * as Types from "./eventsActionTypes";
+import * as Types from "./EventsActionTypes";
 
 const EventReducer = (state = InitialState.eventDetails, action) => {
   switch (action.type) {
