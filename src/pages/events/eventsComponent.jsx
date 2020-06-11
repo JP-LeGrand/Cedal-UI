@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { FormControl, Button } from "@material-ui/core";
-import AddressDetails from "../get-involved/address-details/addressDetails";
-import EventDetails from "./eventDetails";
+import AddressDetails from "../getInvolved/PersonalInformation/AddressDetails/AddressDetails";
+import EventDetails from "./EventDetails";
 
 const useStyles = makeStyles(theme => ({
   root: {

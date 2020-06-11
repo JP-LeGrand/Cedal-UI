@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import Grid from "@material-ui/core/Grid";
 import { bindActionCreators } from "redux";
-import * as eventsActions from "./eventsActions";
+import * as eventsActions from "./EventsActions";
 import PropTypes from "prop-types";
-import CedalEventCard from "./cedalEvent";
+import CedalEventCard from "./CedalEvent";
 
 class EventsAndNews extends React.Component {
   constructor(props) {

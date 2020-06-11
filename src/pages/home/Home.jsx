@@ -9,8 +9,10 @@ class Home extends React.Component {
       <div>
         <Grid container>
           <Grid item xs={12}>
-            <NavigationBar homeIsActive={true}></NavigationBar>
-            This is the Home page
+            <NavigationBar homeIsActive={true}/>
+          </Grid>
+          <Grid item xs={12}>
+              This is the Home page
           </Grid>
         </Grid>
       </div>
