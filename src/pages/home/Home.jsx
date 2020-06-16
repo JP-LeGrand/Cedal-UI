@@ -5,6 +5,9 @@ import {Grid,Typography,Button, Card, CardMedia, CardContent, CardActions, CardA
 import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import history from '../../history'
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import GroupAddTwoToneIcon from '@material-ui/icons/GroupAddTwoTone'
+import BusinessTwoToneIcon from '@material-ui/icons/BusinessTwoTone';
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
@@ -17,27 +20,50 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.h1BoldEbony,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
+  h1BoldWhite:{
+    ...theme.typography.h1BoldWhite,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
   h5MediumEbony:{
     ...theme.typography.h5MediumEbony,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     textAlign:'left'
   },
+  h5MediumWhite:{
+    ...theme.typography.h5MediumWhite,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
   cardDimensions:{
     width:'300px',
     height:'350px',
+    position:'relative',
     [theme.breakpoints.down('sm')]: {
       width: '250px',
       marginBottom:'5px',
       height:'360px',
+      position:'relative'
     }
   },
   labelManatee:{
     ...theme.typography.labelManatee,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
+  cardActions:{
+    position:'absolute',
+    bottom:0
+  },
+  gridFlex:{
+    display:'flex'
+  },
+  trackerBackground:{
+    backgroundColor:theme.colors.oceanGreen,
+    height:'450px',
+    marginBottom:'20px'
+  }
 }));
 
-const ourFocus=[{
+const ourFocus=[
+    {
     heading:'Academic support',
     subHeading:'Our tutors teach skills for academic success, including organization, time management, ' +
         'embed tutorials in the learning process and build strong student-teacher relationships.',
@@ -73,25 +99,55 @@ let home=history.location.pathname
           <Grid item xs={12}>
             <NavigationBar homeIsActive={home.includes('home')}/>
           </Grid>
-          <Grid container>
-          </Grid>
           <Grid container className={classes.root}>
+            <Grid container>
               <Grid item xs={12}>
                 <Typography>
                   Assist in our great mission of contributing to the human-centered development process
                   aimed at paying attention to the interests of vulnerable youth.
                 </Typography>
-              <Grid item xs={12}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    component={Link}
-                    to="/Volunteer">
-                  Get Involved
-                </Button>
+                <Grid item xs={12}>
+                  <Button
+                      variant="contained"
+                      color="primary"
+                      component={Link}
+                      to="/Volunteer">
+                    Get Involved
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-            <Grid container justify={"space-between"} spacing={3}>
+            <Grid container spacing={2} className={classes.trackerBackground}>
+              <Grid item xs={12}>
+                  <Typography className={classes.h1BoldWhite}>
+                    <AssessmentIcon color={"secondary"} fontSize={"large"} style={{position:'relative', top:'5px'}}/>
+                    Cedal Tracker
+                  </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography style={{textAlign:"center"}}>
+                  <GroupAddTwoToneIcon style={{textAlign:"center"}} color={"secondary"} fontSize={"large"}/>
+                </Typography>
+                <Grid item xs={12}>
+                  <Typography className={classes.h1BoldWhite}>8+</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography className={classes.h5MediumWhite}>Number of volunteers</Typography>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography style={{textAlign:"center"}}>
+                  <BusinessTwoToneIcon style={{textAlign:"center"}} color={"secondary"} fontSize={"large"}/>
+                </Typography>
+                <Grid item xs={12}>
+                  <Typography className={classes.h1BoldWhite}>2+</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography className={classes.h5MediumWhite}>Number of organisations we have assisted</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid container justify={"space-around"} spacing={3}>
               <Grid item xs={12}>
                 <Typography className={classes.h1BoldEbony}>
                   Our Focus
@@ -117,7 +173,7 @@ let home=history.location.pathname
                       </Typography>
                     </CardContent>
                     </CardActionArea>
-                    <CardActions>
+                    <CardActions className={classes.cardActions}>
                       <Button size="small" color="primary">
                         Donate
                       </Button>
