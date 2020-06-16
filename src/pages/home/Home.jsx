@@ -3,11 +3,20 @@ import { connect } from "react-redux";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import {Grid,Typography,Button, Card, CardMedia, CardContent, CardActions, CardActionArea } from "@material-ui/core";
 import {Link} from "react-router-dom";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles, useTheme } from "@material-ui/core/styles";
 import history from '../../history'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import GroupAddTwoToneIcon from '@material-ui/icons/GroupAddTwoTone'
 import BusinessTwoToneIcon from '@material-ui/icons/BusinessTwoTone';
+import * as Images from '../../shared/resources/Images/Images'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+import MobileStepper from '@material-ui/core/MobileStepper';
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
@@ -52,13 +61,16 @@ const useStyles = makeStyles(theme => ({
     position:'absolute',
     bottom:0
   },
-  gridFlex:{
-    display:'flex'
+  imageDimension:{
+    width:'100%'
   },
   trackerBackground:{
     backgroundColor:theme.colors.oceanGreen,
     height:'450px',
     marginBottom:'20px'
+  },
+  headLine:{
+    margin:'20px 0px'
   }
 }));
 
@@ -67,32 +79,63 @@ const ourFocus=[
     heading:'Academic support',
     subHeading:'Our tutors teach skills for academic success, including organization, time management, ' +
         'embed tutorials in the learning process and build strong student-teacher relationships.',
-    media:'https://wagner-wpengine.netdna-ssl.com/cace/files/2019/02/RS56563_LEAD_Mentor_11-scr.jpg',
+    media:Images.ImageEducation,
     link:''
   },
   {
     heading:'Training in good people skills',
     subHeading:' Good people skills also extend to include problem-solving abilities, ' +
         'empathy for others and a willingness to work together toward the common good.',
-    media:'https://images.theconversation.com/files/193885/original/file-20171109-14167-17phj7s.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip',
+    media:Images.ImageSocial,
     link:''
   },
   {
     heading:'Adolescent health awareness',
     subHeading: 'Most are healthy, but there is still substantial premature death, illness, and injury among adolescents.',
-    media:'https://www.newsservice.org/getimage.php?p=c2dpZD02NjQxNiZzaWQ9MQ==',
+    media:Images.ImageHealth,
     link:''
   },
   {
     heading:'Gender equality and women empowerment',
     subHeading:'Re-integration of girls and young women that were left  out of the education and economic system',
-    media:'https://cdn.girlsleadership.org/app/uploads/2016/10/GettyImages-186366108.jpeg',
+    media:Images.ImageGirls,
     link:''
   }]
 
 function Home() {
+  const headLineContent=[{
+    heading:'Education is key',
+    subHeading:'Assist in our great mission of contributing to the human-centered development process aimed at paying' +
+        ' attention to the interests of vulnerable youth.',
+    buttonLabel:'Get Involved',
+    imagePath:Images.ImageVolunteers
+  },
+    {
+    heading:'Act of kindness',
+    subHeading:'CEDAL  encourages vulnerable youth to study and not miss out on opportunities to flourish. ' +
+        'In our mentorship program, we impart learning skills that focus on practical solutions. We facilitate the ' +
+        'connection between young learners with a volunteer mentor who contributes to the strengthening of their capabilities.',
+    buttonLabel:'Donate',
+    imagePath:Images.ImageDonate
+  }]
+
+  const theme = useTheme();
   const classes = useStyles();
-let home=history.location.pathname
+  let home=history.location.pathname
+  const [activeStep, setActiveStep] = React.useState(0);
+  const maxSteps = headLineContent.length;
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
 
     return (
         <Grid container>
@@ -100,22 +143,71 @@ let home=history.location.pathname
             <NavigationBar homeIsActive={home.includes('home')}/>
           </Grid>
           <Grid container className={classes.root}>
-            <Grid container>
+            <Grid container className={classes.headLine}>
               <Grid item xs={12}>
-                <Typography>
-                  Assist in our great mission of contributing to the human-centered development process
-                  aimed at paying attention to the interests of vulnerable youth.
-                </Typography>
-                <Grid item xs={12}>
-                  <Button
-                      variant="contained"
-                      color="primary"
-                      component={Link}
-                      to="/Volunteer">
-                    Get Involved
-                  </Button>
-                </Grid>
+                <AutoPlaySwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={activeStep}
+                    onChangeIndex={handleStepChange}
+                    enableMouseEvents
+                >
+                  {headLineContent.map((step, index) => (
+                      <Grid container key={step.heading}>
+                        {Math.abs(activeStep - index) <= 2 ? (
+                            <Grid container className={classes.headLine} spacing={2}>
+                              <Grid item xs={12} md={6}>
+                                <Grid container spacing={2}>
+                                  <Grid item xs={12}>
+                                    <Typography className={classes.h1BoldEbony} style={{textAlign:"left"}}>
+                                      {step.heading}
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <Typography className={classes.h5MediumEbony}>
+                                      {step.subHeading}
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        component={Link}
+                                        to= {step.buttonLabel==='Get Involved'?"/Volunteer":''}>
+                                      {step.buttonLabel}
+                                    </Button>
+                                  </Grid>
+                                </Grid>
+                              </Grid>
+                              <Grid item xs={12} md={6}>
+                                <img src={step.imagePath}
+                                     className={classes.imageDimension}
+                                     alt={'Volunteers'}/>
+                              </Grid>
+                            </Grid>
+                        ) : null}
+                      </Grid>
+                  ))}
+                </AutoPlaySwipeableViews>
               </Grid>
+           <Grid item xs={12}>
+             <MobileStepper
+                 steps={maxSteps}
+                 position="static"
+                 variant="text"
+                 activeStep={activeStep}
+                 nextButton={
+                   <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+                     Next
+                     {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                   </Button>
+                 }
+                 backButton={
+                   <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                     {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                     Back
+                   </Button>
+                 }/>
+           </Grid>
             </Grid>
             <Grid container spacing={2} className={classes.trackerBackground}>
               <Grid item xs={12}>
