@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,11 +20,11 @@ export default function MenuAppBar(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Grid container className={classes.root}>
       <AppBar position="static" color="primary">
         <Toolbar variant="dense">
-          <Grid container spacing={1}>
-            <Grid item xs>
+          <Grid container spacing={3}>
+            <Grid item md={6}>
               <Typography
                 component={Link}
                 id="forgotPasswordLabel"
@@ -34,7 +35,7 @@ export default function MenuAppBar(props) {
                 CEDAL
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item md>
               <Typography
                 id="ourWork"
                 className={props.ourWorkIsActive ? classes.highlight : ""}
@@ -43,7 +44,7 @@ export default function MenuAppBar(props) {
                 Our Work
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item md>
               <Typography
                 component={Link}
                 to="/Volunteer"
@@ -54,18 +55,18 @@ export default function MenuAppBar(props) {
                 Get Involved
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item md>
               <Typography
                 component={Link}
-                to="/Events-And-News"
-                id="eventsAndNewa"
+                to="/EventsAndNews"
+                id="eventsAndNews"
                 className={props.eventsAndNewsIsActive ? classes.highlight : ""}
                 color="secondary"
               >
                 Events and News
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item md>
               <Typography
                 id="donate"
                 className={props.donateIsActive ? classes.highlight : ""}
@@ -77,6 +78,14 @@ export default function MenuAppBar(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-    </div>
+    </Grid>
   );
+}
+
+MenuAppBar.propTypes={
+  donateIsActive:PropTypes.bool,
+  eventsAndNewsIsActive:PropTypes.bool,
+  getInvolvedIsActive:PropTypes.bool,
+  ourWorkIsActive:PropTypes.bool,
+  homeIsActive:PropTypes.bool,
 }
