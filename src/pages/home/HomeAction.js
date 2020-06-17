@@ -1,26 +1,16 @@
 import * as Types from "./HomeActionTypes";
-import Axios from "axios";
 
-var blobLink = "";
+export const GetOurFocus = (ourFocus) => (dispatch) => {
+  dispatch(UpdateHomeStore(Types.GET_OUR_FOCUS, ourFocus))
+}
 
-export const GetDetails = link => {
-  blobLink = link;
+export const SetOurFocus = (ourFocus) => (dispatch) => {
+  dispatch(UpdateHomeStore(Types.SET_OUR_FOCUS, ourFocus))
+}
 
-  return async function(dispatch) {
-    const config = {
-      headers: {
-        "content-type": "application/json"
-      }
-    };
-    await Axios.get(link, config)
-      .then(response => {
-        dispatch({
-          type: Types.GET_DETAILS,
-          payload: response.data
-        });
-      })
-      .catch(error => {
-        "error";
-      });
-  };
-};
+export const UpdateHomeStore = (type, data) => {
+  return {
+    type: type,
+    data
+  }
+}

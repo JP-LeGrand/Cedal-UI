@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import {Grid,Typography,Button, Card, CardMedia, CardContent, CardActions, CardActionArea } from "@material-ui/core";
@@ -8,12 +9,13 @@ import history from '../../history'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import GroupAddTwoToneIcon from '@material-ui/icons/GroupAddTwoTone'
 import BusinessTwoToneIcon from '@material-ui/icons/BusinessTwoTone';
-import * as Images from '../../shared/resources/Images/Images'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import MobileStepper from '@material-ui/core/MobileStepper';
+import {ourFocusData,headLineContent} from "../../shared/resources/textData/TextData";
+import {GetOurFocus, SetOurFocus} from "./HomeAction";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -66,7 +68,7 @@ const useStyles = makeStyles(theme => ({
   },
   trackerBackground:{
     backgroundColor:theme.colors.oceanGreen,
-    height:'450px',
+    height:'350px',
     marginBottom:'20px'
   },
   headLine:{
@@ -74,56 +76,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ourFocus=[
-    {
-    heading:'Academic support',
-    subHeading:'Our tutors teach skills for academic success, including organization, time management, ' +
-        'embed tutorials in the learning process and build strong student-teacher relationships.',
-    media:Images.ImageEducation,
-    link:''
-  },
-  {
-    heading:'Training in good people skills',
-    subHeading:' Good people skills also extend to include problem-solving abilities, ' +
-        'empathy for others and a willingness to work together toward the common good.',
-    media:Images.ImageSocial,
-    link:''
-  },
-  {
-    heading:'Adolescent health awareness',
-    subHeading: 'Most are healthy, but there is still substantial premature death, illness, and injury among adolescents.',
-    media:Images.ImageHealth,
-    link:''
-  },
-  {
-    heading:'Gender equality and women empowerment',
-    subHeading:'Re-integration of girls and young women that were left  out of the education and economic system',
-    media:Images.ImageGirls,
-    link:''
-  }]
-
-function Home() {
-  const headLineContent=[{
-    heading:'Education is key',
-    subHeading:'Assist in our great mission of contributing to the human-centered development process aimed at paying' +
-        ' attention to the interests of vulnerable youth.',
-    buttonLabel:'Get Involved',
-    imagePath:Images.ImageVolunteers
-  },
-    {
-    heading:'Act of kindness',
-    subHeading:'CEDAL  encourages vulnerable youth to study and not miss out on opportunities to flourish. ' +
-        'In our mentorship program, we impart learning skills that focus on practical solutions. We facilitate the ' +
-        'connection between young learners with a volunteer mentor who contributes to the strengthening of their capabilities.',
-    buttonLabel:'Donate',
-    imagePath:Images.ImageDonate
-  }]
-
+function Home(props) {
+  const {getOurFocus,ourFocus,setOurFocus}=props
   const theme = useTheme();
   const classes = useStyles();
   let home=history.location.pathname
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = headLineContent.length;
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = (index) => {
+
+    if(ourFocus.length>0){
+      !open ?setOpen(true):setOpen(false)
+      ourFocus[index].readMore=!open
+      setOurFocus(ourFocus)
+    }
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -136,6 +105,10 @@ function Home() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+
+  useEffect(() => {
+    getOurFocus(ourFocusData)
+  });
 
     return (
         <Grid container>
@@ -193,7 +166,7 @@ function Home() {
              <MobileStepper
                  steps={maxSteps}
                  position="static"
-                 variant="text"
+                 variant="dots"
                  activeStep={activeStep}
                  nextButton={
                    <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
@@ -261,7 +234,7 @@ function Home() {
                         {focus.heading}
                       </Typography>
                       <Typography className={classes.labelManatee}>
-                        {focus.subHeading}
+                        {!focus.readMore?focus.subHeading.substr(0,90).concat('. . .'):focus.subHeading}
                       </Typography>
                     </CardContent>
                     </CardActionArea>
@@ -269,8 +242,10 @@ function Home() {
                       <Button size="small" color="primary">
                         Donate
                       </Button>
-                      <Button size="small" color="primary">
-                        Learn More
+                      <Button size="small"
+                              color="primary"
+                      onClick={()=>handleOpen(index)}>
+                        Read {!focus.readMore?'More':'Less'}
                       </Button>
                     </CardActions>
                   </Card>
@@ -282,11 +257,21 @@ function Home() {
     );
 }
 
+Home.propTypes={
+  ourFocus:PropTypes.array,
+  getOurFocus:PropTypes.func,
+  setOurFocus:PropTypes.func
+}
+
 const mapStateToProps = state => ({
-  numberOfVolunteers: state.homePageDetails.numberOfVolunteers,
-  numberOfOrganisationsAssisted:
-    state.homePageDetails.numberOfOrganisationsAssisted
+  ourFocus: state.homePageDetails.ourFocus
 });
 
+export const mapDispatchToProps = (dispatch) => {
+  return {
+    getOurFocus: (ourFocus) => dispatch(GetOurFocus(ourFocus)),
+    setOurFocus: (ourFocus) => dispatch(SetOurFocus(ourFocus)),
+  }
+}
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps,mapDispatchToProps)(Home);
