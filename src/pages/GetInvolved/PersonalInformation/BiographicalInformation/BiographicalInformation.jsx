@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function BiographicalInformation(props) {
-    const classes = useStyles()
+    const classes = useStyles();
     const [state,setState] = React.useState({
         firstName: '',
         firstNameError: false,
@@ -88,9 +88,9 @@ function BiographicalInformation(props) {
         maritalStatusErrorMessage: '',
     });
 
-    const mounted = useRef()
+    const mounted = useRef();
     useEffect(() => {
-        const {personalInformationRef}=props
+        const {personalInformationRef}=props;
         if (!mounted.current) {
             personalInformationRef(this)
         }
@@ -102,7 +102,7 @@ function BiographicalInformation(props) {
             [`${name}Error`]: false,
             [`${name}ErrorMessage`]: ''
         })
-    }
+    };
 
     const handleDateChange = (date, name) => {
         setState({
@@ -110,20 +110,20 @@ function BiographicalInformation(props) {
             [`${name}Error`]: false,
             [`${name}ErrorMessage`]: ''
         })
-    }
+    };
 
     const validateBiographicalInformation=()=>{
         let firstNameErrorMessage, lastNameErrorMessage,
             identityNumberErrorMessage, dateOfBirthErrorMessage, contactNumberErrorMessage,
-            emailAddressErrorMessage, maritalStatusErrorMessage
+            emailAddressErrorMessage, maritalStatusErrorMessage;
 
-        const firstNameError = !validateFirstName(state?.firstName??'')
-        const lastNameError = !validateFirstName(state?.lastName??'')
-        const identityNumberError = !validateInput(state?.identityNumber??'')
-        const dateOfBirthError= !state.dateOfBirth
-        const contactNumberError = !validateInput(state?.contactNumber??'')
-        const emailAddressError = !validateInput(state?.emailAddress??'')
-        const maritalStatusError = state?.maritalStatus!==0
+        const firstNameError = !validateFirstName(state?.firstName??'');
+        const lastNameError = !validateFirstName(state?.lastName??'');
+        const identityNumberError = !validateInput(state?.identityNumber??'');
+        const dateOfBirthError= !state.dateOfBirth;
+        const contactNumberError = !validateInput(state?.contactNumber??'');
+        const emailAddressError = !validateInput(state?.emailAddress??'');
+        const maritalStatusError = state?.maritalStatus!==0;
 
         if(firstNameError){
             firstNameErrorMessage='First name is required'
@@ -166,11 +166,11 @@ function BiographicalInformation(props) {
             contactNumberError, contactNumberErrorMessage, lastNameError, lastNameErrorMessage,
             identityNumberError, identityNumberErrorMessage, firstNameError, firstNameErrorMessage,
             dateOfBirthError, dateOfBirthErrorMessage
-        })
+        });
 
         return !(firstNameError || lastNameError || identityNumberError
             || contactNumberError || emailAddressError || dateOfBirthError || maritalStatusError)
-    }
+    };
 
     return (
         <Grid container justify="center" spacing={1}>
@@ -305,13 +305,13 @@ BiographicalInformation.propTypes={
     classes:PropTypes.object,
     personalInformation:PropTypes.object,
     personalInformationRef:PropTypes.func
-}
+};
 
 export const mapStateToProps = (state) => {
-    const personalInformation = state.volunteerDetails.personalInformation
+    const personalInformation = state.volunteerDetails.personalInformation;
     return {
         personalInformation: personalInformation
     }
-}
+};
 
 export default connect(mapStateToProps)(BiographicalInformation)

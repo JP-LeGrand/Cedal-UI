@@ -9,9 +9,9 @@ import srcSocial from './Social.jpg'
 import srcDonate from './Donate.jpg'
 
 /*Export*/
-export const ImageVolunteers = srcVolunteers
-export const ImageEducation = srcEducation
-export const ImageGirls = srcGirls
-export const ImageHealth = srcHealth
-export const ImageSocial = srcSocial
-export const ImageDonate = srcDonate
+export const ImageVolunteers = srcVolunteers;
+export const ImageEducation = srcEducation;
+export const ImageGirls = srcGirls;
+export const ImageHealth = srcHealth;
+export const ImageSocial = srcSocial;
+export const ImageDonate = srcDonate;

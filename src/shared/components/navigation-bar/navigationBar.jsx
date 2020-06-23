@@ -88,4 +88,4 @@ MenuAppBar.propTypes={
   getInvolvedIsActive:PropTypes.bool,
   ourWorkIsActive:PropTypes.bool,
   homeIsActive:PropTypes.bool,
-}
+};

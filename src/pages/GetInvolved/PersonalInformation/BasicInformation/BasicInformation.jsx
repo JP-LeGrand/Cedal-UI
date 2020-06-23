@@ -85,7 +85,7 @@ function StyledRadio(props) {
 }
 
 function BasicInformation() {
-    const classes = useStyles()
+    const classes = useStyles();
     return (
         <Grid container justify={"center"}>
             <Grid item xs={12}>
@@ -167,6 +167,6 @@ function BasicInformation() {
 
 BasicInformation.propTypes={
     classes:PropTypes.object
-}
+};
 
 export default BasicInformation

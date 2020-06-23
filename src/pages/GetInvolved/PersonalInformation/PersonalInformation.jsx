@@ -53,7 +53,7 @@ function PersonalInformation(props) {
         biographicalInformationChildRef:{}
     });
     const steps = getSteps();
-    const totalSteps=getSteps().length
+    const totalSteps=getSteps().length;
 
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -70,27 +70,27 @@ function PersonalInformation(props) {
     function isSectionValid (section)  {
         switch (section) {
             case 0:
-                return biographicalInformationFunc()
+                return biographicalInformationFunc();
             case 1:
-                return true
+                return true;
             case 2:
-                return true
+                return true;
             case 3:
-                return true
+                return true;
             case 4:
-                return true
+                return true;
             default:
                 return false
         }
     }
 
     function biographicalInformationFunc(){
-        const {personalInformation,savePersonalInformation} = props
-        const { biographicalInformationChildRef } = state
+        const {personalInformation,savePersonalInformation} = props;
+        const { biographicalInformationChildRef } = state;
 
-        let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation()
+        let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation();
         if(sectionIsValid){
-            let biographicalState=biographicalInformationChildRef.state
+            let biographicalState=biographicalInformationChildRef.state;
             PersonalInformation.biographicalInformation={
                 name:biographicalState.firstName,
                 lastName:biographicalState.lastName,
@@ -99,22 +99,22 @@ function PersonalInformation(props) {
                 contactNumber:biographicalState.contactNumber,
                 emailAddress:biographicalState.emailAddress,
                 maritalStatus:biographicalState.maritalStatus
-            }
-            handleNext()
+            };
+            handleNext();
             savePersonalInformation(personalInformation)
         }
     }
 
     const navigateToNextSection = () => {
-        const totalSections = totalSteps - 1
+        const totalSections = totalSteps - 1;
         if (activeStep < totalSections) {
             isSectionValid(activeStep)
         }
-    }
+    };
 
     const biographicalInformationCallBack = (childData) => {
         setState({ biographicalInformationChildRef: childData })
-    }
+    };
 
     const getStepContent=(index)=> {
         switch (index) {
@@ -131,7 +131,7 @@ function PersonalInformation(props) {
             default:
                 return "Unknown step";
         }
-    }
+    };
 
     return (
         <Grid container>
@@ -181,19 +181,19 @@ function PersonalInformation(props) {
 PersonalInformation.propTypes={
     personalInformation:PropTypes.object,
     savePersonalInformation:PropTypes.func
-}
+};
 
 export const mapStateToProps = (state) => {
-    const personalInformation = state.volunteerDetails.personalInformation
+    const personalInformation = state.volunteerDetails.personalInformation;
     return {
         personalInformation: personalInformation
     }
-}
+};
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
         savePersonalInformation: bindActionCreators(VolunteerActions.SavePersonalInformation, dispatch)
     }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(PersonalInformation)

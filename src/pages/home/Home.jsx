@@ -77,19 +77,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Home(props) {
-  const {getOurFocus,ourFocus,setOurFocus}=props
+  const {getOurFocus,ourFocus,setOurFocus}=props;
   const theme = useTheme();
   const classes = useStyles();
-  let home=history.location.pathname
+  let home=history.location.pathname;
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = headLineContent.length;
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = (index) => {
-
     if(ourFocus.length>0){
-      !open ?setOpen(true):setOpen(false)
-      ourFocus[index].readMore=!open
+      !open?setOpen(true):setOpen(false);
+      ourFocus[index].readMore=!open;
       setOurFocus(ourFocus)
     }
   };
@@ -261,7 +260,7 @@ Home.propTypes={
   ourFocus:PropTypes.array,
   getOurFocus:PropTypes.func,
   setOurFocus:PropTypes.func
-}
+};
 
 const mapStateToProps = state => ({
   ourFocus: state.homePageDetails.ourFocus
@@ -272,6 +271,6 @@ export const mapDispatchToProps = (dispatch) => {
     getOurFocus: (ourFocus) => dispatch(GetOurFocus(ourFocus)),
     setOurFocus: (ourFocus) => dispatch(SetOurFocus(ourFocus)),
   }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home);

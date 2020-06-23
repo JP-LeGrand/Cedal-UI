@@ -29,7 +29,7 @@ export const ourFocusData=[
         subHeading:'Re-integration of girls and young women that were left  out of the education and economic system',
         media:Images.ImageGirls,
         link:'', readMore:false
-    }]
+    }];
 export const headLineContent=[
     {
         heading:'Education is key',
@@ -45,4 +45,4 @@ export const headLineContent=[
             'connection between young learners with a volunteer mentor who contributes to the strengthening of their capabilities.',
         buttonLabel:'Donate',
         imagePath:Images.ImageDonate
-    }]
+    }];

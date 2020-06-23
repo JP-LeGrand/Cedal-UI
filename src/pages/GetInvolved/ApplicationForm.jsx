@@ -29,11 +29,11 @@ const getStepContent = stepIndex => {
         case 1:
             return null;
         case 2:
-            return null
+            return null;
         case 3:
-            return null
+            return null;
         case 4:
-            return null
+            return null;
         default:
             return "";
     }

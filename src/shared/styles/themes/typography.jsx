@@ -7,7 +7,7 @@ const BoldFont = {
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal"
-}
+};
 
 const SemiBoldFont = {
     fontFamily: "NotoSans Regular",
@@ -16,7 +16,7 @@ const SemiBoldFont = {
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal"
-}
+};
 
 const MediumFont = {
     fontFamily: "NotoSans Medium",
@@ -25,7 +25,7 @@ const MediumFont = {
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal"
-}
+};
 
 const RegularFont = {
     fontFamily: "NotoSans Regular",
@@ -34,7 +34,7 @@ const RegularFont = {
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal"
-}
+};
 
 export const typography = {
     useNextVariants: true,
@@ -674,4 +674,4 @@ export const typography = {
         fontSize: "14px",
         color: Colors.smalt
     }
-}
+};
