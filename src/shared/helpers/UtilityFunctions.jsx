@@ -3,9 +3,9 @@ import find from 'lodash/find'
 
 export const splitOnSpace = (value) => value
     .split(' ')
-    .reduce((acc, s) => { s && acc.push(s); return acc }, [])
+    .reduce((acc, s) => { s && acc.push(s); return acc }, []);
 
-export const cleanSpace = (value) => splitOnSpace(value).join(' ')
+export const cleanSpace = (value) => splitOnSpace(value).join(' ');
 
 export function assignIfUndefined(value, overrideValue) {
     return typeof value === 'undefined' ?
@@ -15,7 +15,7 @@ export function assignIfUndefined(value, overrideValue) {
 
 export function customTelephone(input) {
     if (input) {
-        let output = input.replace(/ /g, '')
+        let output = input.replace(/ /g, '');
 
         if (output.substring(0, 4) === "0800" || output.substring(0, 4) === "0860") {
             return output.substr(0, 4) + " " + output.substr(4, 3) + " " + output.substr(7, 3)
@@ -27,7 +27,7 @@ export function customTelephone(input) {
             return output.substr(0, 3) + " (" + output.substr(3, 1) + ")" + output.substr(4, 2) +
                 " " + output.substr(6, 3) + " " + output.substr(9, 4)
         } else if (output[0] === '+' && output.length > 13) {
-            let countryCodeLength = output.length - 10
+            let countryCodeLength = output.length - 10;
             return output.substr(0, countryCodeLength) + " (" + output.substr(countryCodeLength, 1) + ")" +
                 output.substr(countryCodeLength + 1, 2) + " " + output.substr(countryCodeLength + 3, 3) + " " +
                 output.substr(countryCodeLength + 6)
@@ -38,12 +38,12 @@ export function customTelephone(input) {
 }
 
 export function titleCase(text) {
-    const exceptions = ['vip', '(ood)', '(wol)', '(od)', 'po']
+    const exceptions = ['vip', '(ood)', '(wol)', '(od)', 'po'];
     if (text) {
         return text.trim().toLowerCase().split(' ').map(token => {
             if (token.length > 0) {
-                let token1 = token[1] ? token[1] : ''
-                let token0 = token[0] ? token[0] : ''
+                let token1 = token[1] ? token[1] : '';
+                let token0 = token[0] ? token[0] : '';
 
                 return exceptions.findIndex(exceptionToken => exceptionToken === token) === -1 ?
                     token0 === '(' ? token0 + token1.toUpperCase() + token.substring(2) :
@@ -74,21 +74,21 @@ export function formatAPIDate(dateText) {
 }
 
 export function formatAPICurrency(number, showCents = true, currency = 'R') {
-    const numberNegative = number < 0
-    let newNumber = Math.abs(number)
-    let cents = Math.round((Math.abs(newNumber) - Math.floor(newNumber)) * 100)
-    const modAmount = 1000
-    let tokenArray = []
-    newNumber = Math.floor(newNumber)
+    const numberNegative = number < 0;
+    let newNumber = Math.abs(number);
+    let cents = Math.round((Math.abs(newNumber) - Math.floor(newNumber)) * 100);
+    const modAmount = 1000;
+    let tokenArray = [];
+    newNumber = Math.floor(newNumber);
 
     while (newNumber > 0) {
-        let token = `${newNumber >= 1000 ? '000' : ''}${newNumber % modAmount}`
-        newNumber -= token
-        newNumber /= modAmount
+        let token = `${newNumber >= 1000 ? '000' : ''}${newNumber % modAmount}`;
+        newNumber -= token;
+        newNumber /= modAmount;
         tokenArray.push(token.length > 3 ? token.substr(token.length - 3) : token)
     }
 
-    let returnString = 'R '
+    let returnString = 'R ';
     if (currency === 'USD') {
         returnString = '$ '
     }
@@ -102,7 +102,7 @@ export function formatAPICurrency(number, showCents = true, currency = 'R') {
     }
 
     if (cents > 0 || showCents) {
-        let centString = `0${cents}`
+        let centString = `0${cents}`;
         returnString += `.${centString.substr(centString.length - 2)}`
     }
 
@@ -110,7 +110,7 @@ export function formatAPICurrency(number, showCents = true, currency = 'R') {
 }
 
 export function fixDecimalSpacesNoRounding(value, decimals) {
-    const isValueNegative = value < 0
+    const isValueNegative = value < 0;
 
     if (!value) {
         if (decimals && decimals > -1) {
@@ -120,8 +120,8 @@ export function fixDecimalSpacesNoRounding(value, decimals) {
         return 0
     }
 
-    const itemValueText = value.toString().replace(',', '.')
-    const decimalPosition = itemValueText.indexOf('.')
+    const itemValueText = value.toString().replace(',', '.');
+    const decimalPosition = itemValueText.indexOf('.');
     if (!decimalPosition || decimalPosition === -1) {
         if (decimals && decimals > -1) {
             return parseFloat(itemValueText).toFixed(decimals)
@@ -130,12 +130,12 @@ export function fixDecimalSpacesNoRounding(value, decimals) {
         return parseFloat(itemValueText)
     }
 
-    const left = parseFloat(itemValueText.split('.')[0])
-    const rightString = itemValueText.split('.')[1] + '0000'
-    const right = parseFloat(`0.${rightString.substring(0, decimals)}`)
+    const left = parseFloat(itemValueText.split('.')[0]);
+    const rightString = itemValueText.split('.')[1] + '0000';
+    const right = parseFloat(`0.${rightString.substring(0, decimals)}`);
     const result = left >= 0 ?
         (left + right).toFixed(decimals) :
-        (left - right).toFixed(decimals)
+        (left - right).toFixed(decimals);
 
     return isValueNegative && result > 0 ?
         `${result * -1}` :
@@ -151,12 +151,12 @@ export function formatAPIPercentage(number) {
 }
 
 export function getArrayOfObjects() {
-    let result = []
-    const args = Array.from(arguments)
+    let result = [];
+    const args = Array.from(arguments);
 
     args.forEach(arg => {
         if (arg) { result.push(arg) }
-    })
+    });
 
     if (result.length > 0) {
         return result
@@ -188,7 +188,7 @@ export function isObjectNullOrEmpty(obj, emptyVals = [0]) {
 
 export function toTooltipID(label) {
     if (label && label.length > 0) {
-        const tokens = label.split(/\s|\(|\)/)
+        const tokens = label.split(/\s|\(|\)/);
         return tokens.filter(token => token && token.length > 0)
             .map(token => titleCase(token.replace(/[^a-zA-Z0-9]/g, '')))
             .join('')
@@ -198,7 +198,7 @@ export function toTooltipID(label) {
 
 export function toTagID(label) {
     if (label && label.length > 0) {
-        const tokens = label.split(/\s|\(|\)/)
+        const tokens = label.split(/\s|\(|\)/);
         return tokens.filter(token => token && token.length > 0)
             .map(token => token.toLowerCase())
             .join('-')
@@ -206,7 +206,7 @@ export function toTagID(label) {
     return label
 }
 
-const isBlankString = (s) => !(s && s.length)
+const isBlankString = (s) => !(s && s.length);
 
 export function areSimilar(a, b) {
     if (isBlankString(a) && isBlankString(b)) { return true }
@@ -240,8 +240,8 @@ export function onBrowserReady(callback) {
             if (document.addEventListener) {
                 let readyEventHandle = document.addEventListener('readystatechange', event => {
                     if (event.target.readyState !== "loading") {
-                        document.removeEventListener('readystatechange', readyEventHandle)
-                        readyEventHandle = null
+                        document.removeEventListener('readystatechange', readyEventHandle);
+                        readyEventHandle = null;
                         callback()
                     }
                 })
@@ -249,7 +249,7 @@ export function onBrowserReady(callback) {
             else {
                 document.attachEvent('onreadystatechange', () => {
                     if (document.readyState === 'complete') {
-                        document.detachEvent('onreadystatechange', arguments.callee)
+                        document.detachEvent('onreadystatechange', arguments.callee);
                         callback()
                     }
                 })
@@ -261,43 +261,43 @@ export function onBrowserReady(callback) {
 }
 
 function checkDeathStatus(statusDescription, deathStatusDesriptions) {
-    let statusDescriptionMatch = false
+    let statusDescriptionMatch = false;
     deathStatusDesriptions.forEach(deathStatusDescription => {
         if (deathStatusDescription.toLowerCase() === statusDescription.toLowerCase()) {
-            statusDescriptionMatch = true
+            statusDescriptionMatch = true;
             return statusDescriptionMatch
         }
-    })
+    });
     return statusDescriptionMatch
 }
 
 export function formatBytes(bytes) {
-    let i = Math.floor(Math.log(bytes) / Math.log(1024))
-    let sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    let i = Math.floor(Math.log(bytes) / Math.log(1024));
+    let sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
     return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i]
 }
 
 export function toBytes(size) {
-    let result
+    let result;
     if (typeof size === "number") {
         return size
     }
     else if (size) {
-        let arr = size.split(' ')
-        let number = parseFloat(arr[0])
-        let unit = arr[1]
+        let arr = size.split(' ');
+        let number = parseFloat(arr[0]);
+        let unit = arr[1];
 
         switch (unit) {
             case 'B':
-                result = number
-                break
+                result = number;
+                break;
             case 'KB':
-                result = number * 1024
-                break
+                result = number * 1024;
+                break;
             case 'MB':
-                result = number * 1024 * 1024
-                break
+                result = number * 1024 * 1024;
+                break;
             default:
                 return 0
         }
@@ -311,34 +311,34 @@ export function MockFile() {
 
 //used for tests
 MockFile.prototype.create = function (name, size, mimeType) {
-    const _name = name || "mock.txt"
-    const _size = size || 1024
-    const _mimeType = mimeType || 'plain/txt'
+    const _name = name || "mock.txt";
+    const _size = size || 1024;
+    const _mimeType = mimeType || 'plain/txt';
 
     function range(count) {
-        let output = ""
+        let output = "";
         for (let i = 0; i < count; i++) {
             output += "a"
         }
         return output
     }
 
-    let blob = new Blob([range(_size)], { type: _mimeType })
-    blob.lastModifiedDate = new Date()
-    blob.name = _name
+    let blob = new Blob([range(_size)], { type: _mimeType });
+    blob.lastModifiedDate = new Date();
+    blob.name = _name;
 
     return blob
-}
+};
 
 //convert base64string object into an instance of a file and append the base64string to the instance
 export function dataURLtoFileWithBase64(dataUrl, filename) {
-    let arr, mime, bstr, n, u8arr
+    let arr, mime, bstr, n, u8arr;
     if (dataUrl) {
-        arr = dataUrl.split(',')
-            mime = arr[0].match(/:(.*?);/)[1]
-            bstr = atob(arr[1])
-            n = bstr.length
-            u8arr = new Uint8Array(n)
+        arr = dataUrl.split(',');
+            mime = arr[0].match(/:(.*?);/)[1];
+            bstr = atob(arr[1]);
+            n = bstr.length;
+            u8arr = new Uint8Array(n);
 
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n)
@@ -346,22 +346,22 @@ export function dataURLtoFileWithBase64(dataUrl, filename) {
 
     }
 
-    let newFileItem = new File([u8arr ?? 1024], filename ?? '', { type: mime ?? 'plain/txt' })
+    let newFileItem = new File([u8arr ?? 1024], filename ?? '', { type: mime ?? 'plain/txt' });
 
-    newFileItem.base64string = dataUrl
-    newFileItem.path = filename
+    newFileItem.base64string = dataUrl;
+    newFileItem.path = filename;
     return newFileItem
 }
 
 //convert base64string object into an instance of a file
 export function dataURLtoFile(dataUrl, filename) {
-    let arr, mime, bstr, n, u8arr
+    let arr, mime, bstr, n, u8arr;
     if (dataUrl) {
-        arr = dataUrl.split(',')
-            mime = arr[0].match(/:(.*?);/)[1]
-            bstr = atob(arr[1])
-            n = bstr.length
-            u8arr = new Uint8Array(n)
+        arr = dataUrl.split(',');
+            mime = arr[0].match(/:(.*?);/)[1];
+            bstr = atob(arr[1]);
+            n = bstr.length;
+            u8arr = new Uint8Array(n);
 
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n)
@@ -402,7 +402,7 @@ export function getWorkNumber(telephones) {
 }
 
 export function preformatContactNumber(contactNumber) {
-    let formatted = contactNumber?.replace(/\D+/g, "")
+    let formatted = contactNumber?.replace(/\D+/g, "");
     if (formatted?.length === 10 && formatted?.charAt(0) === '0') {
         formatted = formatted?.slice(1, formatted?.length)
     }
@@ -413,18 +413,18 @@ export function preformatContactNumber(contactNumber) {
 }
 
 export function calculatePeriod(startDate, endDate) {
-    let years = endDate.diff(startDate, 'years')
-    let months = endDate.diff(startDate, 'months')
+    let years = endDate.diff(startDate, 'years');
+    let months = endDate.diff(startDate, 'months');
     return years + ' year(s) and ' + months % 12 + ' month(s)'
 }
 
 export function consolidateBankingInfo(portfolioBanking) {
-    let observed = []
-    let consolidated = []
+    let observed = [];
+    let consolidated = [];
 
     for (let i = 0; i < portfolioBanking?.length; i++) {
         if (!observed.includes(portfolioBanking[i]?.accountNumber)) {
-            consolidated.push(portfolioBanking[i])
+            consolidated.push(portfolioBanking[i]);
             observed.push(portfolioBanking[i]?.accountNumber)
         }
         else {
