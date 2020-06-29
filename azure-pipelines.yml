@@ -18,14 +18,9 @@ steps:
 
 - script: |
     npm install
+    yarn install
     npm run build
   displayName: 'npm install and build'
-
-- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
-  displayName: 'Yarn install packages'
-  inputs:
-    ProjectDirectory: '$(Build.SourcesDirectory)/cedal-frontend/src'
-    Arguments: '--network-timeout 1000000000'
 
 - task: CopyFiles@2
   inputs:
