@@ -1,4 +1,4 @@
-import * as types from "./EventsActionTypes";
+import * as types from "./eventsActionTypes";
 import Axios from "axios";
 
 const config = {

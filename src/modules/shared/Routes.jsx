@@ -1,8 +1,8 @@
 import React from "react";
 import Home from "../../pages/home/Home";
-import GetInvolved from "../../pages/getInvolved/GetInvolved";
-import ApplicationForm from "../../pages/getInvolved/ApplicationForm";
-import EventsAndNews from "../../pages/events/Events";
+import GetInvolved from "../../pages/GetInvolved/GetInvolved";
+import ApplicationForm from "../../pages/GetInvolved/ApplicationForm";
+import EventsAndNews from "../../pages/events/events";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 class Routes extends React.Component {
