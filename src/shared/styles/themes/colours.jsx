@@ -46,6 +46,7 @@ export const pomegranate = "#E85211";
 export const black = "#000000";
 export const blackOpacity = "rgba(0,0,0,0.15)";
 export const blackShadow = "rgba(0,0,0,0.61)";
+export const barberrysolid = "#DED717";
 
 //color palette dark and light themes, only to be used in palette.jsx
 export const bitterSweet = '#ff6265';

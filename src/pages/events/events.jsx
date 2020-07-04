@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import Grid from "@material-ui/core/Grid";
-import { bindActionCreators } from "redux";
-import * as eventsActions from "./eventsActions";
 import PropTypes from "prop-types";
 import CedalEventCard from "./cedalEvent";
 
@@ -13,9 +11,6 @@ class EventsAndNews extends React.Component {
     this.state = {
       cedalEvents: this.props.eventDetails.cedalEvents
     };
-  }
-  async UNSAFE_componentWillMount() {
-    await this.props.getEventsActions();
   }
 
   //This will check if the array is empty
@@ -50,8 +45,4 @@ const mapStateToProps = state => ({
   cedalEvents: state.eventDetails.cedalEvents,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getEventsActions: bindActionCreators(eventsActions.getEvents, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventsAndNews);
+export default connect(mapStateToProps)(EventsAndNews);
