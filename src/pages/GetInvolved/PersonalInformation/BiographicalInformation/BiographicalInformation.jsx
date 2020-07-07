@@ -178,7 +178,7 @@ function BiographicalInformation(props) {
     };
 
     useEffect(() => {
-        personalInformationRef({state,validateBiographicalInformation })
+        personalInformationRef({state, validateBiographicalInformation})
     },[state]); // Call this hook whenever state is changed
 
     return (
