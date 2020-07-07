@@ -92,15 +92,15 @@ function BiographicalInformation(props) {
 
     const handleChange = name => event => {
         setState({
+            ...state,
             [name]: event.target.value,
         })
     };
 
     const handleDateChange = (date, name) => {
         setState({
+            ...state,
             [name]: date ? moment(date).format("MM/DD/YYYY") : null,
-            [`${name}Error`]: false,
-            [`${name}ErrorMessage`]: ''
         })
     };
 
