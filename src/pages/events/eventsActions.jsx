@@ -1,4 +1,5 @@
 import * as types from "./eventsActionTypes";
+import * as eventsApi from "./evenetsApi";
 import Axios from "axios";
 
 const config = {
@@ -8,17 +9,23 @@ const config = {
 };
 
 export function getEvents() {
-  return async function(dispatch) {
-    await Axios.get(
-      "https://localhost:44353/api/Events/AllEvents",
-      config
-    ).then(response => {
-      dispatch({
-        type: types.GET_EVENTS,
-        payload: response.data
-      });
-    });
-  };
+  return function (dispatch) {
+      return eventsApi.GetEvents(dispatch)
+          .then(response => {
+            if (response.request.status !== 200 || !response.data) {
+              throw 'Error retrieving events'
+            }
+            dispatch({
+              type: types.GET_EVENTS,
+              payload: response.data
+            })
+          })
+          .catch(() => {
+            dispatch({
+              type: types.GET_EVENTS_FAILED
+            })
+          })
+    }
 }
 
 export function createEvent(eventInformation) {

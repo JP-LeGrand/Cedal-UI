@@ -16,5 +16,7 @@ export default {
   eventDetails: {
     eventInformation: {},
     cedalEvents: []
+  },
+  subscriptionLetter:{
   }
 };

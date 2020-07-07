@@ -3,9 +3,9 @@ import * as Colors from "./colours";
 export const buttons = {
   primaryButton: {
     color: Colors.white,
-    backgroundColor: Colors.cornflowerblue,
+    backgroundColor: Colors.oceangreen,
     border: "1px solid",
-    borderColor: Colors.cornflowerblue,
+    borderColor: Colors.oceangreen,
     boxShadow: "none",
     minHeight: "40px",
     width: "190px",
@@ -21,17 +21,22 @@ export const buttons = {
     }
   },
   secondaryButton: {
-    color: `${Colors.cornflowerblue} !important`,
-    backgroundColor: "transparent !important",
+    color: Colors.white,
+    backgroundColor: Colors.barberrysolid,
     border: "1px solid",
-    borderColor: Colors.cornflowerblue,
-    boxShadow: "none !important",
-    width: "190px",
+    borderColor: Colors.barberrysolid,
+    boxShadow: "none",
     minHeight: "40px",
+    width: "190px",
     "&:hover": {
-      color: `${Colors.white} !important`,
-      backgroundColor: `${Colors.toreabay} !important`,
+      color: Colors.white,
+      backgroundColor: Colors.toreabay,
       borderColor: Colors.toreabay
+    },
+    "&:disabled": {
+      color: Colors.white,
+      backgroundColor: Colors.manatee,
+      borderColor: Colors.manatee
     }
   },
   iconButton: {

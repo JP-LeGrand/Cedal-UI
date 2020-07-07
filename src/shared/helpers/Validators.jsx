@@ -428,3 +428,10 @@ export const validateCareOf = value => {
 export const validateAddressLine = value => {
     return value && value.length <= 30 && !/[^a-zA-Z0-9 ]/i.test(value)
 };
+
+export const ValidateEmailAddress = (email) => validateEmailAddressStructure(email)
+
+const expression = /^\w+([.%-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/ // eslint-disable-line no-useless-escape
+export const validateEmailAddressStructure = emailAddress => {
+    return expression.test(String(emailAddress).toLowerCase())
+}

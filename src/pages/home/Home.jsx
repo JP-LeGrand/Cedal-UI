@@ -16,6 +16,10 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import {ourFocusData,headLineContent} from "../../shared/resources/textData/TextData";
 import {GetOurFocus, SetOurFocus} from "./HomeAction";
+import {bindActionCreators} from "redux";
+import * as eventsActions from "../events/eventsActions";
+import Newsletter from "./newsletter/Newsletter";
+import * as Colors from "../../shared/styles/themes/colours";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -73,6 +77,16 @@ const useStyles = makeStyles(theme => ({
   },
   headLine:{
     margin:'20px 0px'
+  },
+  gridMarginTop:{
+    marginTop: "20px"
+  },
+  primaryButton:{
+    "&:hover": {
+      color: Colors.white,
+      backgroundColor: Colors.oceangreen,
+      borderColor: Colors.oceangreen
+    },
   }
 }));
 
@@ -107,6 +121,7 @@ function Home(props) {
 
   useEffect(() => {
     getOurFocus(ourFocusData)
+    props.getEventsActions()
   });
 
     return (
@@ -238,7 +253,7 @@ function Home(props) {
                     </CardContent>
                     </CardActionArea>
                     <CardActions className={classes.cardActions}>
-                      <Button size="small" color="primary">
+                      <Button size="small" color="primary" className={classes.primaryButton}>
                         Donate
                       </Button>
                       <Button size="small"
@@ -251,6 +266,11 @@ function Home(props) {
                 </Grid>
               )}
             </Grid>
+            <Grid container>
+              <Grid item xs={12} className={classes.gridMarginTop}>
+                <Newsletter/>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
     );
@@ -259,7 +279,8 @@ function Home(props) {
 Home.propTypes={
   ourFocus:PropTypes.array,
   getOurFocus:PropTypes.func,
-  setOurFocus:PropTypes.func
+  setOurFocus:PropTypes.func,
+  getEventsActions:PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -270,6 +291,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     getOurFocus: (ourFocus) => dispatch(GetOurFocus(ourFocus)),
     setOurFocus: (ourFocus) => dispatch(SetOurFocus(ourFocus)),
+    getEventsActions: bindActionCreators(eventsActions.getEvents, dispatch)
   }
 };
 
