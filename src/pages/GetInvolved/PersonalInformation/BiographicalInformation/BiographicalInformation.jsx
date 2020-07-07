@@ -94,6 +94,8 @@ function BiographicalInformation(props) {
         setState({
             ...state,
             [name]: event.target.value,
+            [`${name}Error`]: false,
+            [`${name}ErrorMessage`]: ''
         })
     };
 
@@ -101,6 +103,8 @@ function BiographicalInformation(props) {
         setState({
             ...state,
             [name]: date ? moment(date).format("MM/DD/YYYY") : null,
+            [`${name}Error`]: false,
+            [`${name}ErrorMessage`]: ''
         })
     };
 
@@ -174,8 +178,8 @@ function BiographicalInformation(props) {
     };
 
     useEffect(() => {
-        personalInformationRef(this)
-    },[state]);
+        personalInformationRef({state,validateBiographicalInformation })
+    },[state]); // Call this hook whenever state is changed
 
     return (
         <Grid container justify="center" spacing={1}>
