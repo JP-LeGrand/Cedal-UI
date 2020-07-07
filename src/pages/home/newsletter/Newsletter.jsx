@@ -52,7 +52,6 @@ function Newsletter(props) {
     });
 
     const handleChange = name => event => {
-        event.preventDefault();
         setSubscriber({
             [name]: event.target.value,
             [`${name}Error`]: false,
