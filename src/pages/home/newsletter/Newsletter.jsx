@@ -63,8 +63,9 @@ function Newsletter(props) {
     const validateEmail =()=>{
         let userEmailError
         let userEmailErrorMessage=''
+        let userEmail= subscriber?.userEmail
 
-        userEmailError =!subscriber?.userEmail.trim() || !Validators.ValidateEmailAddress(subscriber.userEmail)
+        userEmailError =!userEmail?.trim() || !Validators.ValidateEmailAddress(userEmail)
 
         if (userEmailError) {
             userEmailErrorMessage = 'Please enter valid email address'
@@ -74,9 +75,9 @@ function Newsletter(props) {
         const formValid = !(userEmailError)
 
         setSubscriber({
+            userEmail,
             userEmailError,
-            userEmailErrorMessage,
-            formValid
+            userEmailErrorMessage
         })
 
         if(formValid){
@@ -119,7 +120,7 @@ function Newsletter(props) {
                         <Button color={"secondary"}
                                 variant="outlined"
                         className={classes.secondaryButton}
-                        onClick={()=>validateEmail()}>
+                        onClick={validateEmail}>
                             Subscribe
                         </Button>
                     </Grid>
