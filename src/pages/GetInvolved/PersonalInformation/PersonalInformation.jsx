@@ -49,9 +49,7 @@ function getSteps() {
 function PersonalInformation(props) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [state, setState] = React.useState({
-        biographicalInformationChildRef:{}
-    });
+    const [biographicalInformationChildRef, setBiographicalInformationChildRef] = React.useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -70,7 +68,7 @@ function PersonalInformation(props) {
     function isSectionValid (section)  {
         switch (section) {
             case 0:
-                return biographicalInformationFunc();
+                return validateBiographicalInformation();
             case 1:
                 return true;
             case 2:
@@ -84,11 +82,10 @@ function PersonalInformation(props) {
         }
     }
 
-    function biographicalInformationFunc(){
-        const {personalInformation,savePersonalInformation} = props;
-        const { biographicalInformationChildRef } = state;
+    function validateBiographicalInformation(){
+        const {personalInformation, savePersonalInformation} = props;
 
-        let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation();
+        let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation() ?? false;
         if(sectionIsValid){
             let biographicalState=biographicalInformationChildRef.state;
             PersonalInformation.biographicalInformation={
@@ -103,6 +100,7 @@ function PersonalInformation(props) {
             handleNext();
             savePersonalInformation(personalInformation)
         }
+        return sectionIsValid
     }
 
     const navigateToNextSection = () => {
@@ -112,14 +110,10 @@ function PersonalInformation(props) {
         }
     };
 
-    const biographicalInformationCallBack = (childData) => {
-        setState({ biographicalInformationChildRef: childData })
-    };
-
     const getStepContent=(index)=> {
         switch (index) {
             case 0:
-                return <BiographicalInformation personalInformationRef={biographicalInformationCallBack}/>;
+                return <BiographicalInformation personalInformationRef={setBiographicalInformationChildRef}/>;
             case 1:
                 return <BasicInformation />;
             case 2:

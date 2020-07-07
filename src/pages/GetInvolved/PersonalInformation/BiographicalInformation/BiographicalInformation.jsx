@@ -7,6 +7,7 @@ import moment from 'moment';
 import MomentUtils from "@date-io/moment";
 import {connect} from 'react-redux';
 import {validateFirstName, validateInput} from "../../../../shared/helpers/Validators";
+import {ourFocusData} from "../../../../shared/resources/textData/TextData";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -87,20 +88,11 @@ function BiographicalInformation(props) {
         maritalStatusError: false,
         maritalStatusErrorMessage: '',
     });
-
-    const mounted = useRef();
-    useEffect(() => {
-        const {personalInformationRef}=props;
-        if (!mounted.current) {
-            personalInformationRef(this)
-        }
-    });
+    const {personalInformationRef}=props;
 
     const handleChange = name => event => {
         setState({
             [name]: event.target.value,
-            [`${name}Error`]: false,
-            [`${name}ErrorMessage`]: ''
         })
     };
 
@@ -113,17 +105,25 @@ function BiographicalInformation(props) {
     };
 
     const validateBiographicalInformation=()=>{
+        let firstName= state.firstName,
+            lastName= state.lastName,
+            identityNumber=state.identityNumber,
+            dateOfBirth=state.dateOfBirth,
+            contactNumber=state.contactNumber,
+            emailAddress=state.emailAddress,
+            maritalStatus= state.maritalStatus;
+
         let firstNameErrorMessage, lastNameErrorMessage,
             identityNumberErrorMessage, dateOfBirthErrorMessage, contactNumberErrorMessage,
             emailAddressErrorMessage, maritalStatusErrorMessage;
 
-        const firstNameError = !validateFirstName(state?.firstName??'');
-        const lastNameError = !validateFirstName(state?.lastName??'');
-        const identityNumberError = !validateInput(state?.identityNumber??'');
+        const firstNameError = !validateFirstName(firstName??'');
+        const lastNameError = !validateFirstName(lastName??'');
+        const identityNumberError = !validateInput(identityNumber??'');
         const dateOfBirthError= !state.dateOfBirth;
-        const contactNumberError = !validateInput(state?.contactNumber??'');
-        const emailAddressError = !validateInput(state?.emailAddress??'');
-        const maritalStatusError = state?.maritalStatus!==0;
+        const contactNumberError = !validateInput(contactNumber??'');
+        const emailAddressError = !validateInput(emailAddress??'');
+        const maritalStatusError = maritalStatus!==0;
 
         if(firstNameError){
             firstNameErrorMessage='First name is required'
@@ -165,12 +165,17 @@ function BiographicalInformation(props) {
             maritalStatusError, maritalStatusErrorMessage, emailAddressError, emailAddressErrorMessage,
             contactNumberError, contactNumberErrorMessage, lastNameError, lastNameErrorMessage,
             identityNumberError, identityNumberErrorMessage, firstNameError, firstNameErrorMessage,
-            dateOfBirthError, dateOfBirthErrorMessage
+            dateOfBirthError, dateOfBirthErrorMessage,    firstName, lastName, identityNumber, dateOfBirth,
+            contactNumber, emailAddress, maritalStatus
         });
 
         return !(firstNameError || lastNameError || identityNumberError
             || contactNumberError || emailAddressError || dateOfBirthError || maritalStatusError)
     };
+
+    useEffect(() => {
+        personalInformationRef(this)
+    },[state]);
 
     return (
         <Grid container justify="center" spacing={1}>
@@ -180,7 +185,7 @@ function BiographicalInformation(props) {
                         id="firstName"
                         className={classes.textField}
                         label={'First Name'}
-                        value={state.firstName}
+                        value={state.firstName??''}
                         error={state.firstNameError}
                         onChange={handleChange('firstName')}
                         helperText={state.firstNameErrorMessage}
@@ -191,7 +196,7 @@ function BiographicalInformation(props) {
                         id="lastName"
                         className={classes.textField}
                         label={'Last Name'}
-                        value={state.lastName}
+                        value={state.lastName??''}
                         error={state.lastNameError}
                         onChange={handleChange('lastName')}
                         helperText={state.lastNameErrorMessage}/>
@@ -203,7 +208,7 @@ function BiographicalInformation(props) {
                             clearable
                             margin="normal"
                             autoOk
-                            value={state.dateOfBirth}
+                            value={state.dateOfBirth??null}
                             label="Date of birth"
                             placeholder={"DD/MM/YYYY"}
                             openTo='year'
@@ -228,7 +233,7 @@ function BiographicalInformation(props) {
                         id="contactNumber"
                         className={classes.textField}
                         label={'Contact Number'}
-                    value={state.contactNumber}
+                    value={state.contactNumber??''}
                     error={state.contactNumberError}
                         onChange={handleChange('contactNumber')}
                     helperText={state.contactNumberErrorMessage}/>
@@ -239,7 +244,7 @@ function BiographicalInformation(props) {
                         type="email"
                         className={classes.textField}
                         label ={'Email Address'}
-                        value={state.emailAddress}
+                        value={state.emailAddress??''}
                         error={state.emailAddressError}
                         onChange={handleChange('emailAddress')}
                         helperText={state.emailAddressErrorMessage}
@@ -250,7 +255,7 @@ function BiographicalInformation(props) {
                         id="identityNumber"
                                className={classes.textField}
                                label={'Identity Number'}
-                    value={state.identityNumber}
+                    value={state.identityNumber??''}
                     error={state.identityNumberError}
                         onChange={handleChange('identityNumber')}
                     helperText={state.identityNumberErrorMessage}/>
