@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {
@@ -7,9 +7,12 @@ import {
     RadioGroup,
     FormControlLabel,
     Radio,
-    TextareaAutosize
+    FormHelperText,
+    TextField
 } from "@material-ui/core";
 import PropTypes from 'prop-types'
+import {connect} from "react-redux";
+import {validateFirstName, validateInput} from "../../../../shared/helpers/Validators";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,7 +20,9 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1)
     },
     textField: {
-        width: "100%"
+        maxWidth: '368px',
+        width: '100%',
+        paddingBottom: '15px',
     },
     cadContent: theme.paper.applicationFormPaperBlocks,
     rootRadio: {
@@ -69,23 +74,89 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function StyledRadio(props) {
+function BasicInformation(props) {
     const classes = useStyles();
+    const [state,setState] = React.useState({
+        driversLicence: '',
+        driversLicenceError: false,
+        driversLicenceErrorMessage: '',
+        disabilities: '',
+        disabilitiesError: false,
+        disabilitiesErrorMessage: '',
+        disabilitiesDetails: '',
+        disabilitiesDetailsError: false,
+        disabilitiesDetailsErrorMessage: '',
+        vehicle: '',
+        vehicleError: false,
+        vehicleErrorMessage: '',
+    });
+    const {personalInformationRef, personalInformation}=props;
 
-    return (
-        <Radio
-            className={classes.rootRadio}
-            disableRipple
-            color="default"
-            checkedIcon={<span className={(classes.icon, classes.checkedIcon)} />}
-            icon={<span className={classes.icon} />}
-            {...props}
-        />
-    );
-}
+    const handleChange = name => event => {
+        setState({
+            ...state,
+            [name]: event.target.value,
+            [`${name}Error`]: false,
+            [`${name}ErrorMessage`]: ''
+        })
+    };
 
-function BasicInformation() {
-    const classes = useStyles();
+    const validateBasicInformation=()=>{
+        let driversLicence= state.driversLicence,
+            disabilities=state.disabilities,
+            disabilitiesDetails=state.disabilitiesDetails,
+            vehicle=state.vehicle;
+
+        let driversLicenceErrorMessage, disabilitiesDetailsErrorMessage,
+            vehicleErrorMessage, disabilitiesErrorMessage;
+
+        const driversLicenceError = !driversLicence.trim()
+        const disabilitiesError = !disabilities.trim()
+        const disabilitiesDetailsError= !disabilitiesDetails.trim()
+        const vehicleError = !vehicle.trim();
+
+        if(driversLicenceError){
+            driversLicenceErrorMessage='Field is required'
+        }else{
+            driversLicenceErrorMessage=''
+        }
+        if(disabilitiesError){
+            disabilitiesErrorMessage='Field is required'
+        }else{
+            disabilitiesErrorMessage=''
+        }
+        if(disabilitiesDetailsError){
+            disabilitiesDetailsErrorMessage='Disability details is required'
+        }else{
+            disabilitiesDetailsErrorMessage=''
+        }
+        if(vehicleError){
+            vehicleErrorMessage='Field is required'
+        }else{
+            vehicleErrorMessage=''
+        }
+
+        setState({
+            driversLicenceError, driversLicenceErrorMessage,
+            disabilitiesError, disabilitiesErrorMessage, disabilitiesDetailsError, disabilitiesDetailsErrorMessage,
+            vehicleError, vehicleErrorMessage,
+        });
+
+        return !(driversLicenceError || disabilitiesError
+            || disabilitiesDetailsError || vehicleError)
+    };
+
+    useEffect(() => {
+        setState({
+            ...state,
+            ...personalInformation.basicInformation,
+        })
+    },[personalInformation.basicInformation]);
+
+    useEffect(() => {
+        personalInformationRef({state, validateBasicInformation})
+    },[state]);
+
     return (
         <Grid container justify={"center"}>
             <Grid item xs={12}>
@@ -97,38 +168,40 @@ function BasicInformation() {
                         <RadioGroup
                             defaultValue="driversLicence"
                             aria-label="driversLicence"
-                            name="customized-radios"
+                            onChange={handleChange("driversLicence")}
                         >
                             <FormControlLabel
-                                value="1"
-                                control={<StyledRadio />}
+                                value={1}
+                                control={<Radio />}
                                 label="Yes"
                             />
                             <FormControlLabel
-                                value="2"
-                                control={<StyledRadio />}
+                                value={2}
+                                control={<Radio/>}
                                 label="No"
                             />
                         </RadioGroup>
+                        <FormHelperText>{state.driversLicenceErrorMessage}</FormHelperText>
                     </Grid>
                     <Grid item xs={12}>
                         <FormLabel component="legend">Do you ownn a car?</FormLabel>
                         <RadioGroup
-                            defaultValue="disabilities"
-                            aria-label="disabilities"
-                            name="customized-radios"
+                            defaultValue="vehicle"
+                            aria-label="vehicle"
+                            onChange={handleChange("vehicle")}
                         >
                             <FormControlLabel
-                                value="1"
-                                control={<StyledRadio />}
+                                value={1}
+                                control={<Radio/>}
                                 label="Yes"
                             />
                             <FormControlLabel
-                                value="2"
-                                control={<StyledRadio />}
+                                value={2}
+                                control={<Radio/>}
                                 label="No"
                             />
                         </RadioGroup>
+                        <FormHelperText>{state.disabilitiesErrorMessage}</FormHelperText>
                     </Grid>
                     <Grid item xs={12}>
                         <FormLabel component="legend">
@@ -137,26 +210,29 @@ function BasicInformation() {
                         <RadioGroup
                             defaultValue="disabilities"
                             aria-label="disabilities"
-                            name="customized-radios"
+                            onChange={handleChange("disabilities")}
                         >
                             <FormControlLabel
-                                value="1"
-                                control={<StyledRadio />}
+                                value={1}
+                                control={<Radio/>}
                                 label="Yes"
                             />
                             <FormControlLabel
-                                value="2"
-                                control={<StyledRadio />}
+                                value={2}
+                                control={<Radio/>}
                                 label="No"
                             />
                         </RadioGroup>
+                        <FormHelperText>{state.disabilitiesDetailsErrorMessage}</FormHelperText>
                     </Grid>
                     <Grid item xs={12}>
                         <FormLabel component="legend">Disability Details</FormLabel>
-                        <TextareaAutosize
+                        <TextField
                             className={classes.textField}
-                            aria-label="minimum height"
+                            error={state.disabilitiesDetailsError}
                             rowsMin={3}
+                            onChange={handleChange("disabilitiesDetails")}
+                            helperText={state.disabilitiesDetailsErrorMessage}
                         />
                     </Grid>
                 </FormControl>
@@ -164,9 +240,17 @@ function BasicInformation() {
         </Grid>
     );
 }
-
 BasicInformation.propTypes={
-    classes:PropTypes.object
+    classes:PropTypes.object,
+    personalInformationRef:PropTypes.func,
+    personalInformation:PropTypes.object,
 };
 
-export default BasicInformation
+export const mapStateToProps = (state) => {
+    const personalInformation = state.volunteerDetails.personalInformation;
+    return {
+        personalInformation: personalInformation
+    }
+};
+
+export default connect(mapStateToProps)(BasicInformation)

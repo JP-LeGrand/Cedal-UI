@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
@@ -7,7 +7,6 @@ import moment from 'moment';
 import MomentUtils from "@date-io/moment";
 import {connect} from 'react-redux';
 import {validateFirstName, validateInput} from "../../../../shared/helpers/Validators";
-import {ourFocusData} from "../../../../shared/resources/textData/TextData";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,27 +22,6 @@ const useStyles = makeStyles(theme => ({
     rootRadio: {
         "&:hover": {
             backgroundColor: "transparent"
-        }
-    },
-    icon: {
-        borderRadius: "50%",
-        width: 16,
-        height: 16,
-        boxShadow:
-            "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
-        backgroundColor: "#f5f8fa",
-        backgroundImage:
-            "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
-        "$root.Mui-focusVisible &": {
-            outline: "2px auto rgba(19,124,189,.6)",
-            outlineOffset: 2
-        },
-        "input:hover ~ &": {
-            backgroundColor: "#ebf1f5"
-        },
-        "input:disabled ~ &": {
-            boxShadow: "none",
-            background: "rgba(206,217,224,.5)"
         }
     },
     checkedIcon: {
@@ -72,9 +50,6 @@ function BiographicalInformation(props) {
         lastName: '',
         lastNameError: false,
         lastNameErrorMessage: '',
-        identityNumber: '',
-        identityNumberError: false,
-        identityNumberErrorMessage: '',
         dateOfBirth: null,
         dateOfBirthError: false,
         dateOfBirthErrorMessage: '',
@@ -84,11 +59,8 @@ function BiographicalInformation(props) {
         emailAddress: '',
         emailAddressError: false,
         emailAddressErrorMessage: '',
-        maritalStatus: 0,
-        maritalStatusError: false,
-        maritalStatusErrorMessage: '',
     });
-    const {personalInformationRef}=props;
+    const {personalInformationRef, personalInformation}=props;
 
     const handleChange = name => event => {
         setState({
@@ -111,23 +83,19 @@ function BiographicalInformation(props) {
     const validateBiographicalInformation=()=>{
         let firstName= state.firstName,
             lastName= state.lastName,
-            identityNumber=state.identityNumber,
             dateOfBirth=state.dateOfBirth,
             contactNumber=state.contactNumber,
-            emailAddress=state.emailAddress,
-            maritalStatus= state.maritalStatus;
+            emailAddress=state.emailAddress;
 
         let firstNameErrorMessage, lastNameErrorMessage,
-            identityNumberErrorMessage, dateOfBirthErrorMessage, contactNumberErrorMessage,
+            dateOfBirthErrorMessage, contactNumberErrorMessage,
             emailAddressErrorMessage, maritalStatusErrorMessage;
 
         const firstNameError = !validateFirstName(firstName??'');
         const lastNameError = !validateFirstName(lastName??'');
-        const identityNumberError = !validateInput(identityNumber??'');
         const dateOfBirthError= !state.dateOfBirth;
         const contactNumberError = !validateInput(contactNumber??'');
         const emailAddressError = !validateInput(emailAddress??'');
-        const maritalStatusError = maritalStatus!==0;
 
         if(firstNameError){
             firstNameErrorMessage='First name is required'
@@ -138,11 +106,6 @@ function BiographicalInformation(props) {
             lastNameErrorMessage='Last name is required'
         }else{
             lastNameErrorMessage=''
-        }
-        if(identityNumberError){
-            identityNumberErrorMessage='Identity number is required'
-        }else{
-            identityNumberErrorMessage=''
         }
         if(dateOfBirthError){
             dateOfBirthErrorMessage='Date of birth is required'
@@ -159,23 +122,26 @@ function BiographicalInformation(props) {
         }else{
             emailAddressErrorMessage=''
         }
-        if(maritalStatusError){
-            maritalStatusErrorMessage='Email address is required'
-        }else{
-            maritalStatusErrorMessage=''
-        }
 
         setState({
-            maritalStatusError, maritalStatusErrorMessage, emailAddressError, emailAddressErrorMessage,
+            emailAddressError, emailAddressErrorMessage,
             contactNumberError, contactNumberErrorMessage, lastNameError, lastNameErrorMessage,
-            identityNumberError, identityNumberErrorMessage, firstNameError, firstNameErrorMessage,
-            dateOfBirthError, dateOfBirthErrorMessage,    firstName, lastName, identityNumber, dateOfBirth,
-            contactNumber, emailAddress, maritalStatus
+            firstNameError, firstNameErrorMessage,
+            dateOfBirthError, dateOfBirthErrorMessage,    firstName, lastName, dateOfBirth,
+            contactNumber, emailAddress,
         });
 
-        return !(firstNameError || lastNameError || identityNumberError
-            || contactNumberError || emailAddressError || dateOfBirthError || maritalStatusError)
+        return !(firstNameError || lastNameError
+            || contactNumberError || emailAddressError || dateOfBirthError)
     };
+
+    // React's useEffect hook combines componentDidMount , componentDidUpdate and componentWillUnmount lifecycle methods.
+    useEffect(() => {
+        setState({
+            ...state,
+            ...personalInformation.basicInformation,
+        })
+    },[personalInformation.basicInformation]);
 
     useEffect(() => {
         personalInformationRef({state, validateBiographicalInformation})
@@ -254,60 +220,9 @@ function BiographicalInformation(props) {
                         helperText={state.emailAddressErrorMessage}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        id="identityNumber"
-                               className={classes.textField}
-                               label={'Identity Number'}
-                    value={state.identityNumber??''}
-                    error={state.identityNumberError}
-                        onChange={handleChange('identityNumber')}
-                    helperText={state.identityNumberErrorMessage}/>
-                </Grid>
-                <Grid item xs={12}>
-                    <FormControl style={{margin:'15px 0'}}>
-                        <FormLabel component="legend">Marital Status</FormLabel>
-                        <RadioGroup
-                            defaultValue="Marital Status"
-                            aria-label="Marital Status"
-                            name="customized-radios"
-                            onChange={handleChange('maritalStatus')}
-                        >
-                            <FormControlLabel
-                                value="1"
-                                control={<StyledRadio />}
-                                label="Single"
-                            />
-                            <FormControlLabel
-                                value="2"
-                                control={<StyledRadio />}
-                                label="Married"
-                            />
-                            <FormControlLabel
-                                value="3"
-                                control={<StyledRadio />}
-                                label="Divorced"
-                            />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid>
             </Grid>
         </Grid>
     );
-}
-
-function StyledRadio(props) {
-    const classes = useStyles();
-    return (
-        <Radio
-            className={classes.rootRadio}
-            disableRipple
-            color="default"
-            checkedIcon={<span className={(classes.icon, classes.checkedIcon)} />}
-            icon={<span className={classes.icon} />}
-            {...props}
-        />
-    )
 }
 
 BiographicalInformation.propTypes={

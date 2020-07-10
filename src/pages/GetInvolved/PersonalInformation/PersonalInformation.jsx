@@ -50,6 +50,7 @@ function PersonalInformation(props) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const [biographicalInformationChildRef, setBiographicalInformationChildRef] = React.useState({});
+    const [basicInformationChildRef, setBasicInformationChildRef] = React.useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -70,7 +71,7 @@ function PersonalInformation(props) {
             case 0:
                 return validateBiographicalInformation();
             case 1:
-                return true;
+                return validateBasicInformation();
             case 2:
                 return true;
             case 3:
@@ -88,17 +89,33 @@ function PersonalInformation(props) {
         let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation() ?? false;
         if(sectionIsValid){
             let biographicalState=biographicalInformationChildRef.state;
-            PersonalInformation.biographicalInformation={
-                name:biographicalState.firstName,
+            personalInformation.biographicalInformation={
+                firstName:biographicalState.firstName,
                 lastName:biographicalState.lastName,
-                idNumber:biographicalState.identityNumber,
                 dateOfBirth:biographicalState.dateOfBirth,
                 contactNumber:biographicalState.contactNumber,
                 emailAddress:biographicalState.emailAddress,
-                maritalStatus:biographicalState.maritalStatus
             };
-            handleNext();
             savePersonalInformation(personalInformation)
+            handleNext();
+        }
+        return sectionIsValid
+    }
+
+    function validateBasicInformation(){
+        const {personalInformation, savePersonalInformation} = props;
+
+        let sectionIsValid = basicInformationChildRef?.validateBasicInformation() ?? false;
+        if(sectionIsValid){
+            let basicState=basicInformationChildRef.state;
+            personalInformation.biographicalInformation={
+                driversLicence: basicState.driversLicence,
+                disabilities: basicState.disabilities,
+                disabilitiesDetails: basicState.disabilitiesDetails,
+                vehicle: basicState.vehicle,
+            };
+            savePersonalInformation(personalInformation)
+            handleNext();
         }
         return sectionIsValid
     }
@@ -115,7 +132,7 @@ function PersonalInformation(props) {
             case 0:
                 return <BiographicalInformation personalInformationRef={setBiographicalInformationChildRef}/>;
             case 1:
-                return <BasicInformation />;
+                return <BasicInformation personalInformationRef={setBasicInformationChildRef}/>;
             case 2:
                 return <LanguageDetails />;
             case 3:
