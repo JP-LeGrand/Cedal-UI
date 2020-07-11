@@ -243,22 +243,24 @@ function BasicInformation(props) {
                         </RadioGroup>
                         <FormHelperText className={classes.error}>{state.disabilitiesErrorMessage}</FormHelperText>
                     </Grid>
-                    {state.disabilities?.toLocaleLowerCase()==="yes" &&
-                        <Grid item xs={12}>
-                        <Grid item xs={12}>
-                            <TextField
-                                label={"Disability Details"}
-                                className={classes.textField}
-                                error={state.disabilitiesDetailsError}
-                                rowsMin={3}
-                                onChange={handleChange("disabilitiesDetails")}
-                                helperText={state.disabilitiesDetailsErrorMessage}
-                                value={state.disabilitiesDetails ?? ""}
-                            />
-                        </Grid>
-                    </Grid>
-                    }
                 </FormControl>
+                {state.disabilities?.toLocaleLowerCase()==="yes" &&
+                <Grid item xs={12}>
+                    <Grid item xs={12}>
+                        <TextField
+                            label={"Disability Details"}
+                            className={classes.textField}
+                            error={state.disabilitiesDetailsError}
+                            rowsMin={3}
+                            onChange={handleChange("disabilitiesDetails")}
+                            helperText={state.disabilitiesDetailsErrorMessage}
+                            value={state.disabilitiesDetails ?? ""}
+                            rowsMax={3}
+                            multiline
+                        />
+                    </Grid>
+                </Grid>
+                }
             </Grid>
         </Grid>
     );

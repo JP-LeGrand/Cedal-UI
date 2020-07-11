@@ -231,7 +231,7 @@ BiographicalInformation.propTypes={
     personalInformationRef:PropTypes.func
 };
 
-export const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
     const personalInformation = state.volunteerDetails.personalInformation;
     return {
         personalInformation: personalInformation

@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {mapStateToProps} from "../BiographicalInformation/BiographicalInformation";
 
 const useStyles = makeStyles(theme => ({
     container: theme.containers.containerFlexStart,
@@ -178,6 +177,13 @@ AddressDetails.propTypes={
     classes:PropTypes.object,
     personalInformation:PropTypes.object,
     personalInformationRef:PropTypes.func
+};
+
+const mapStateToProps = (state) => {
+    const personalInformation = state.volunteerDetails.personalInformation;
+    return {
+        personalInformation: personalInformation
+    }
 };
 
 export default connect(mapStateToProps)(AddressDetails)

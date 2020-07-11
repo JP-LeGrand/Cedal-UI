@@ -1,5 +1,3 @@
-import * as Images from "../../shared/resources/Images/Images";
-
 export default {
   homePageDetails: {
     ourFocus:[]
@@ -8,7 +6,8 @@ export default {
     personalInformation: {
       biographicalInformation:{},
       basicInformation:{},
-      addressDetails:{}
+      addressDetails:{},
+      description:""
     },
     experienceInformation: {},
     referenceInformation: {},
