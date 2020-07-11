@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import * as Colors from "../../shared/styles/themes/colours";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,6 +22,13 @@ const useStyles = makeStyles(theme => ({
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         textAlign:'left'
     },
+    primaryButton:{
+        "&:hover": {
+            color: Colors.white,
+            backgroundColor: Colors.oceangreen,
+            borderColor: Colors.oceangreen
+        },
+    }
 }));
 
 export default function ApplicationDisclaimer() {
@@ -81,6 +89,7 @@ export default function ApplicationDisclaimer() {
                             <Button
                                 variant="contained"
                                 color="primary"
+                                className={classes.primaryButton}
                                 component={Link}
                                 to="/ApplicationForm"
                             >
