@@ -8,6 +8,7 @@ export default {
     personalInformation: {
       biographicalInformation:{},
       basicInformation:{},
+      addressDetails:{}
     },
     experienceInformation: {},
     referenceInformation: {},
