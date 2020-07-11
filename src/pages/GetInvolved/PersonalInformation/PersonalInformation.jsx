@@ -154,7 +154,7 @@ function PersonalInformation(props) {
             case 4:
                 return <Hobbies />;
             default:
-                return "Unknown step";
+                return null;
         }
     };
 
