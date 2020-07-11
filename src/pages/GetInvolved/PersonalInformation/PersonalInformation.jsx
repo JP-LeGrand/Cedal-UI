@@ -49,6 +49,8 @@ function PersonalInformation(props) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [biographicalInformationChildRef, setBiographicalInformationChildRef] = React.useState({});
     const [basicInformationChildRef, setBasicInformationChildRef] = React.useState({});
+    const [addressDetailsChildRef, setAddressDetailsChildRef] = React.useState({});
+    const [hobbiesChildRef, setHobbiesChildRef] = React.useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -71,11 +73,9 @@ function PersonalInformation(props) {
             case 1:
                 return validateBasicInformation();
             case 2:
-                return true;
+                return validateAddressDetails();
             case 3:
-                return true;
-            case 4:
-                return true;
+                return validateHobbies();
             default:
                 return false
         }
@@ -118,6 +118,38 @@ function PersonalInformation(props) {
         return sectionIsValid
     }
 
+    function validateAddressDetails(){
+        const {personalInformation, savePersonalInformation} = props;
+
+        let sectionIsValid = addressDetailsChildRef?.validateAddressDetails() ?? false;
+        if(sectionIsValid){
+            let addressDetailsState=addressDetailsChildRef.state;
+            personalInformation.addressDetails={
+                streetName: addressDetailsState.streetName,
+                city:addressDetailsState.city,
+                postalCode:addressDetailsState.postalCode,
+                province:addressDetailsState.province,
+                country:addressDetailsState.country
+            };
+            savePersonalInformation(personalInformation)
+            handleNext();
+        }
+        return sectionIsValid
+    }
+
+    function validateHobbies(){
+        const {personalInformation, savePersonalInformation} = props;
+
+        let sectionIsValid = hobbiesChildRef?.validateHobbies() ?? false;
+        if(sectionIsValid){
+            let hobbiesState=hobbiesChildRef.state;
+            personalInformation.description=hobbiesState.description;
+            savePersonalInformation(personalInformation)
+            handleNext();
+        }
+        return sectionIsValid
+    }
+
     const navigateToNextSection = () => {
         const totalSections = totalSteps - 1;
         if (activeStep < totalSections) {
@@ -132,11 +164,11 @@ function PersonalInformation(props) {
             case 1:
                 return <BasicInformation personalInformationRef={setBasicInformationChildRef}/>;
             case 2:
-                return <AddressDetails />;
-            case 4:
-                return <Hobbies />;
+                return <AddressDetails personalInformationRef={setAddressDetailsChildRef}/>;
+            case 3:
+                return <Hobbies personalInformationRef={setHobbiesChildRef}/>;
             default:
-                return "Unknown step";
+                return null;
         }
     };
 
