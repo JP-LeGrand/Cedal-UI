@@ -89,7 +89,7 @@ function BiographicalInformation(props) {
 
         let firstNameErrorMessage, lastNameErrorMessage,
             dateOfBirthErrorMessage, contactNumberErrorMessage,
-            emailAddressErrorMessage, maritalStatusErrorMessage;
+            emailAddressErrorMessage;
 
         const firstNameError = !validateFirstName(firstName??'');
         const lastNameError = !validateFirstName(lastName??'');
@@ -127,7 +127,7 @@ function BiographicalInformation(props) {
             emailAddressError, emailAddressErrorMessage,
             contactNumberError, contactNumberErrorMessage, lastNameError, lastNameErrorMessage,
             firstNameError, firstNameErrorMessage,
-            dateOfBirthError, dateOfBirthErrorMessage,    firstName, lastName, dateOfBirth,
+            dateOfBirthError, dateOfBirthErrorMessage, firstName, lastName, dateOfBirth,
             contactNumber, emailAddress,
         });
 
@@ -139,9 +139,9 @@ function BiographicalInformation(props) {
     useEffect(() => {
         setState({
             ...state,
-            ...personalInformation.basicInformation,
+            ...personalInformation.biographicalInformation,
         })
-    },[personalInformation.basicInformation]);
+    },[personalInformation.biographicalInformation]);
 
     useEffect(() => {
         personalInformationRef({state, validateBiographicalInformation})

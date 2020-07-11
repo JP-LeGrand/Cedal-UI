@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import PropTypes from 'prop-types'
 import {connect} from "react-redux";
-import {validateFirstName, validateInput} from "../../../../shared/helpers/Validators";
+import clsx from 'clsx';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,46 +24,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         paddingBottom: '15px',
     },
-    cadContent: theme.paper.applicationFormPaperBlocks,
     rootRadio: {
         "&:hover": {
             backgroundColor: "transparent"
-        }
-    },
-    icon: {
-        borderRadius: "50%",
-        width: 16,
-        height: 16,
-        boxShadow:
-            "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
-        backgroundColor: "#f5f8fa",
-        backgroundImage:
-            "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
-        "$root.Mui-focusVisible &": {
-            outline: "2px auto rgba(19,124,189,.6)",
-            outlineOffset: 2
-        },
-        "input:hover ~ &": {
-            backgroundColor: "#ebf1f5"
-        },
-        "input:disabled ~ &": {
-            boxShadow: "none",
-            background: "rgba(206,217,224,.5)"
-        }
-    },
-    checkedIcon: {
-        backgroundColor: "#137cbd",
-        backgroundImage:
-            "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
-        "&:before": {
-            display: "block",
-            width: 16,
-            height: 16,
-            backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
-            content: '""'
-        },
-        "input:hover ~ &": {
-            backgroundColor: "#106ba3"
         }
     },
     containerCenter: {
@@ -71,8 +34,59 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
-    }
+    },
+    error:{
+        color:theme.colors.alizarinCrimson
+    },
+    icon: {
+        borderRadius: '50%',
+        width: 16,
+        height: 16,
+        boxShadow: 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
+        backgroundColor: '#f5f8fa',
+        backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
+        '$root.Mui-focusVisible &': {
+            outline: '2px auto rgba(19,124,189,.6)',
+            outlineOffset: 2,
+        },
+        'input:hover ~ &': {
+            backgroundColor: '#ebf1f5',
+        },
+        'input:disabled ~ &': {
+            boxShadow: 'none',
+            background: 'rgba(206,217,224,.5)',
+        },
+    },
+    checkedIcon: {
+        backgroundColor: theme.colors.oceanGreen,
+        backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
+        '&:before': {
+            display: 'block',
+            width: 16,
+            height: 16,
+            backgroundImage: 'radial-gradient(#fff,#fff 28%,transparent 32%)',
+            content: '""',
+        },
+        'input:hover ~ &': {
+            backgroundColor: theme.colors.oceanGreen,
+        },
+    },
 }));
+
+function StyledRadio(props) {
+    const classes = useStyles();
+
+    return (
+        <Radio
+            className={classes.rootRadio}
+            disableRipple
+            color="default"
+            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+            icon={<span className={classes.icon} />}
+            {...props}
+        />
+    );
+}
 
 function BasicInformation(props) {
     const classes = useStyles();
@@ -110,10 +124,19 @@ function BasicInformation(props) {
         let driversLicenceErrorMessage, disabilitiesDetailsErrorMessage,
             vehicleErrorMessage, disabilitiesErrorMessage;
 
-        const driversLicenceError = !driversLicence.trim()
-        const disabilitiesError = !disabilities.trim()
-        const disabilitiesDetailsError= !disabilitiesDetails.trim()
-        const vehicleError = !vehicle.trim();
+        const driversLicenceError = !driversLicence?.trim()
+        const disabilitiesError = !disabilities?.trim()
+        const vehicleError = !vehicle?.trim();
+        let disabilitiesDetailsError
+
+        if(state.disabilities?.toLocaleLowerCase()==="yes"){
+             disabilitiesDetailsError = !disabilitiesDetails?.trim()
+            if(disabilitiesDetailsError){
+                disabilitiesDetailsErrorMessage='Disability details is required'
+            }else{
+                disabilitiesDetailsErrorMessage=''
+            }
+        }
 
         if(driversLicenceError){
             driversLicenceErrorMessage='Field is required'
@@ -125,11 +148,6 @@ function BasicInformation(props) {
         }else{
             disabilitiesErrorMessage=''
         }
-        if(disabilitiesDetailsError){
-            disabilitiesDetailsErrorMessage='Disability details is required'
-        }else{
-            disabilitiesDetailsErrorMessage=''
-        }
         if(vehicleError){
             vehicleErrorMessage='Field is required'
         }else{
@@ -139,7 +157,7 @@ function BasicInformation(props) {
         setState({
             driversLicenceError, driversLicenceErrorMessage,
             disabilitiesError, disabilitiesErrorMessage, disabilitiesDetailsError, disabilitiesDetailsErrorMessage,
-            vehicleError, vehicleErrorMessage,
+            vehicleError, vehicleErrorMessage,driversLicence, disabilities, disabilitiesDetails, vehicle
         });
 
         return !(driversLicenceError || disabilitiesError
@@ -162,79 +180,84 @@ function BasicInformation(props) {
             <Grid item xs={12}>
                 <FormControl noValidate autoComplete="off">
                     <Grid item xs={12}>
-                        <FormLabel component="legend">
+                        <FormLabel component="legend" className={state.driversLicenceError?classes.error:''}>
                             Do you have a driver's licence?
                         </FormLabel>
                         <RadioGroup
-                            defaultValue="driversLicence"
+                            value={state.driversLicence ?? ""}
                             aria-label="driversLicence"
                             onChange={handleChange("driversLicence")}
                         >
                             <FormControlLabel
-                                value={1}
-                                control={<Radio />}
+                                value={"Yes"}
+                                control={<StyledRadio />}
                                 label="Yes"
                             />
                             <FormControlLabel
-                                value={2}
-                                control={<Radio/>}
+                                value={"No"}
+                                control={<StyledRadio/>}
                                 label="No"
                             />
                         </RadioGroup>
-                        <FormHelperText>{state.driversLicenceErrorMessage}</FormHelperText>
+                        <FormHelperText className={classes.error}>{state.driversLicenceErrorMessage}</FormHelperText>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormLabel component="legend">Do you ownn a car?</FormLabel>
+                        <FormLabel component="legend" className={state.vehicleError?classes.error:''}>Do you own a car?</FormLabel>
                         <RadioGroup
-                            defaultValue="vehicle"
+                            value={state.vehicle ?? ""}
                             aria-label="vehicle"
                             onChange={handleChange("vehicle")}
                         >
                             <FormControlLabel
-                                value={1}
-                                control={<Radio/>}
+                                value={"Yes"}
+                                control={<StyledRadio/>}
                                 label="Yes"
                             />
                             <FormControlLabel
-                                value={2}
-                                control={<Radio/>}
+                                value={"No"}
+                                control={<StyledRadio/>}
                                 label="No"
                             />
                         </RadioGroup>
-                        <FormHelperText>{state.disabilitiesErrorMessage}</FormHelperText>
+                        <FormHelperText className={classes.error}>{state.vehicleErrorMessage}</FormHelperText>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormLabel component="legend">
+                        <FormLabel component="legend" className={state.disabilitiesError?classes.error:''}>
                             Do you have any disabilities?
                         </FormLabel>
                         <RadioGroup
-                            defaultValue="disabilities"
+                            value={state.disabilities ?? ""}
                             aria-label="disabilities"
                             onChange={handleChange("disabilities")}
                         >
                             <FormControlLabel
-                                value={1}
-                                control={<Radio/>}
+                                value={"Yes"}
+                                control={<StyledRadio/>}
                                 label="Yes"
                             />
                             <FormControlLabel
-                                value={2}
-                                control={<Radio/>}
+                                value={"No"}
+                                control={<StyledRadio/>}
                                 label="No"
                             />
                         </RadioGroup>
-                        <FormHelperText>{state.disabilitiesDetailsErrorMessage}</FormHelperText>
+                        <FormHelperText className={classes.error}>{state.disabilitiesErrorMessage}</FormHelperText>
                     </Grid>
-                    <Grid item xs={12}>
-                        <FormLabel component="legend">Disability Details</FormLabel>
-                        <TextField
-                            className={classes.textField}
-                            error={state.disabilitiesDetailsError}
-                            rowsMin={3}
-                            onChange={handleChange("disabilitiesDetails")}
-                            helperText={state.disabilitiesDetailsErrorMessage}
-                        />
+                    {state.disabilities?.toLocaleLowerCase()==="yes" &&
+                        <Grid item xs={12}>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Disability Details"}
+                                className={classes.textField}
+                                error={state.disabilitiesDetailsError}
+                                rowsMin={3}
+                                onChange={handleChange("disabilitiesDetails")}
+                                helperText={state.disabilitiesDetailsErrorMessage}
+                                value={state.disabilitiesDetails ?? ""}
+                            />
+                        </Grid>
                     </Grid>
+                    }
                 </FormControl>
             </Grid>
         </Grid>

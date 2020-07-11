@@ -1,7 +1,6 @@
 import React from "react";
 import AddressDetails from "./AddressDetails/AddressDetails";
 import BiographicalInformation from "./BiographicalInformation/BiographicalInformation";
-import LanguageDetails from "./LanguageDetails/LanguageDetails";
 import Hobbies from "./Hobbies/Hobbies";
 import BasicInformation from "./BasicInformation/BasicInformation";
 import {Grid} from "@material-ui/core";
@@ -40,7 +39,6 @@ function getSteps() {
     return [
         "Biographical Information",
         "Basic Information",
-        "Languages Spoken",
         "Address Details",
         "Hobbies"
     ];
@@ -108,7 +106,7 @@ function PersonalInformation(props) {
         let sectionIsValid = basicInformationChildRef?.validateBasicInformation() ?? false;
         if(sectionIsValid){
             let basicState=basicInformationChildRef.state;
-            personalInformation.biographicalInformation={
+            personalInformation.basicInformation={
                 driversLicence: basicState.driversLicence,
                 disabilities: basicState.disabilities,
                 disabilitiesDetails: basicState.disabilitiesDetails,
@@ -134,8 +132,6 @@ function PersonalInformation(props) {
             case 1:
                 return <BasicInformation personalInformationRef={setBasicInformationChildRef}/>;
             case 2:
-                return <LanguageDetails />;
-            case 3:
                 return <AddressDetails />;
             case 4:
                 return <Hobbies />;
