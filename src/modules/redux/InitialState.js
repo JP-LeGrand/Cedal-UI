@@ -6,7 +6,8 @@ export default {
   },
   volunteerDetails: {
     personalInformation: {
-      biographicalInformation:{}
+      biographicalInformation:{},
+      basicInformation:{},
     },
     experienceInformation: {},
     referenceInformation: {},
