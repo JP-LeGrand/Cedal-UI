@@ -20,12 +20,12 @@ const useStyles = makeStyles(theme => ({
 function HobbiesComponent(props) {
     const classes = useStyles();
     const [state,setState] = React.useState({
-        description:"",
-        descriptionError:false,
-        descriptionErrorMessage:"",
+        hobby:"",
+        hobbyError:false,
+        hobbyErrorMessage:"",
     });
 
-    const {personalInformationRef, personalInformation}=props;
+    const {contributionInformationRef, contributionInformation}=props;
 
     const handleChange = name => event => {
         setState({
@@ -37,34 +37,28 @@ function HobbiesComponent(props) {
     };
 
     const validateHobbies=()=>{
-        let description=state.description
+        let hobby=state.hobby
 
-        let descriptionError= !description?.trim()
-        let descriptionErrorMessage
-
-        if(description){
-            descriptionErrorMessage= "Description is required"
-        }
-        else{
-            descriptionErrorMessage=""
-        }
-
+        let hobbyError= !hobby?.trim()
+        let hobbyErrorMessage= hobbyError ? "Hobby is required" : ""
+    
         setState({
-            description, descriptionError, descriptionErrorMessage
+            hobbyError, 
+            hobbyErrorMessage
         })
 
-        return !descriptionError
+        return !hobbyError
     }
 
     useEffect(() => {
         setState({
             ...state,
-            ...personalInformation.description,
+            ...contributionInformation?.hobbies
         })
-    },[personalInformation.description]);
+    },[contributionInformation?.hobbies]);
 
     useEffect(() => {
-        personalInformationRef({state, validateHobbies})
+        contributionInformationRef({state, validateHobbies})
     },[state]);
 
     return (
@@ -75,11 +69,14 @@ function HobbiesComponent(props) {
                             aria-label="minimum height"
                             rowsMax={3}
                             multiline
-                            label={"Tell us something about yourself"}
-                            value={state.description ?? ""}
-                            onChange={handleChange("description")}
-                            helperText={state.descriptionErrorMessage}
-                            error={state.descriptionError}
+                            label={"What are your hobbies? Please separate each hobby by a comma e.g. (football, swimming)"}
+                            InputLabelProps={{
+                            shrink: true
+                          }}
+                            value={state.hobby ?? ""}
+                            onChange={handleChange("hobby")}
+                            helperText={state.hobbyErrorMessage}
+                            error={state.hobbyError}
                         />
                     </Grid>
             </Grid>
@@ -88,14 +85,14 @@ function HobbiesComponent(props) {
 
 HobbiesComponent.propTypes={
     classes:PropTypes.object,
-    personalInformationRef:PropTypes.func,
-    personalInformation:PropTypes.object,
+    contributionInformationRef:PropTypes.func,
+    contributionInformation:PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
-    const personalInformation = state.volunteerDetails.personalInformation;
+    const contributionInformation = state.volunteerDetails.contributionInformation;
     return {
-        personalInformation: personalInformation
+        contributionInformation: contributionInformation
     }
 };
 

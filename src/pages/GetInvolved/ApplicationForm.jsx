@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import PersonalInformation from "./PersonalInformation/PersonalInformation";
+import ContributionInformation from "./ContributionInformation/ContributionInformation";
 import Grid from "@material-ui/core/Grid";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import { Stepper, Step, StepLabel, Container } from "@material-ui/core";
@@ -19,23 +20,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-    return ["Personal Information", "Experience Information", "References", "Screening", "Summary"];
+    return ["Personal Information", "Contribution Details", "Screening", "Summary"];
 }
 
 const getStepContent = stepIndex => {
     switch (stepIndex) {
         case 0:
-            return <PersonalInformation />;
+            return <PersonalInformation/>
         case 1:
-            return null;
+            return <ContributionInformation/>
         case 2:
             return null;
         case 3:
             return null;
-        case 4:
-            return null;
         default:
-            return "";
+            return null;
     }
 };
 

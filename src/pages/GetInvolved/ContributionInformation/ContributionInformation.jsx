@@ -1,7 +1,8 @@
 import React from "react";
-import AddressDetails from "./AddressDetails/AddressDetails";
-import BiographicalInformation from "./BiographicalInformation/BiographicalInformation";
-import BasicInformation from "./BasicInformation/BasicInformation";
+import Availability from "./Availability";
+import SpecialTalents from "./SpecialTalents";
+import Hobbies from "./Hobbies";
+import Interests from "./Interests";
 import {Grid} from "@material-ui/core";
 import {bindActionCreators} from "redux";
 import * as VolunteerActions from "../VolunteerActions";
@@ -36,18 +37,20 @@ const useStyles = makeStyles((theme) =>
 
 function getSteps() {
     return [
-        "Biographical Information",
-        "Basic Information",
-        "Address Details"
+        "Special Talents",
+        "Hobbies",
+        "Interests",
+        "Availability"
     ];
 }
 
-function PersonalInformation(props) {
+function ContributionInformation(props) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [biographicalInformationChildRef, setBiographicalInformationChildRef] = React.useState({});
-    const [basicInformationChildRef, setBasicInformationChildRef] = React.useState({});
-    const [addressDetailsChildRef, setAddressDetailsChildRef] = React.useState({});
+    const [specialTalentChildRef, setSpecialTalentChildRef] = React.useState({});
+    const [interestsChildRef, setInterestsChildRef] = React.useState({});
+    const [availabilityChildRef, setAvailabilityChildRef] = React.useState({});
+    const [hobbiesChildRef, setHobbiesChildRef] = React.useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -66,67 +69,66 @@ function PersonalInformation(props) {
     function isSectionValid (section)  {
         switch (section) {
             case 0:
-                return validateBiographicalInformation();
+                return validateSpecialTalent();
             case 1:
-                return validateBasicInformation();
+                return validateHobbies();
             case 2:
-                return validateAddressDetails();
+                return validateInterests();
+            case 3:
+                return validateAvailability();
             default:
                 return false
         }
     }
 
-    function validateBiographicalInformation(){
-        const {personalInformation, savePersonalInformation} = props;
+    function validateSpecialTalent(){
+        const {contributionInformation, saveContributionInformation} = props;
 
-        let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation() ?? false;
+        let sectionIsValid = specialTalentChildRef.validateSpecialTalents() ?? false;
         if(sectionIsValid){
-            let biographicalState=biographicalInformationChildRef.state;
-            personalInformation.biographicalInformation={
-                firstName:biographicalState.firstName,
-                lastName:biographicalState.lastName,
-                dateOfBirth:biographicalState.dateOfBirth,
-                contactNumber:biographicalState.contactNumber,
-                emailAddress:biographicalState.emailAddress,
+            contributionInformation.specialTalent={
+                skills: specialTalentChildRef.state,
+                otherSkills: specialTalentChildRef.other.other
             };
-            savePersonalInformation(personalInformation)
+            saveContributionInformation(contributionInformation)
+            handleNext();
+        }
+    }
+
+    function validateInterests(){
+        const {contributionInformation, saveContributionInformation} = props;
+
+        let sectionIsValid = interestsChildRef?.validateInterests() ?? false;
+        if(sectionIsValid){
+            let interestsState=interestsChildRef.state;
+            contributionInformation.interests= interestsState;
+            saveContributionInformation(contributionInformation)
             handleNext();
         }
         return sectionIsValid
     }
 
-    function validateBasicInformation(){
-        const {personalInformation, savePersonalInformation} = props;
+    function validateAvailability(){
+        const {contributionInformation, saveContributionInformation} = props;
 
-        let sectionIsValid = basicInformationChildRef?.validateBasicInformation() ?? false;
+        let sectionIsValid = availabilityChildRef?.validateAvailability() ?? false;
         if(sectionIsValid){
-            let basicState=basicInformationChildRef.state;
-            personalInformation.basicInformation={
-                driversLicence: basicState.driversLicence,
-                disabilities: basicState.disabilities,
-                disabilitiesDetails: basicState.disabilitiesDetails,
-                vehicle: basicState.vehicle,
-            };
-            savePersonalInformation(personalInformation)
+            let availabilityState=availabilityChildRef.state;
+            contributionInformation.availability=availabilityState;
+            saveContributionInformation(contributionInformation)
             handleNext();
         }
         return sectionIsValid
     }
 
-    function validateAddressDetails(){
-        const {personalInformation, savePersonalInformation} = props;
+    function validateHobbies(){
+        const {contributionInformation, saveContributionInformation} = props;
 
-        let sectionIsValid = addressDetailsChildRef?.validateAddressDetails() ?? false;
+        let sectionIsValid = hobbiesChildRef?.validateHobbies() ?? false;
         if(sectionIsValid){
-            let addressDetailsState=addressDetailsChildRef.state;
-            personalInformation.addressDetails={
-                streetName: addressDetailsState.streetName,
-                city:addressDetailsState.city,
-                postalCode:addressDetailsState.postalCode,
-                province:addressDetailsState.province,
-                country:addressDetailsState.country
-            };
-            savePersonalInformation(personalInformation)
+            let hobbiesState=hobbiesChildRef.state;
+            contributionInformation.hobbies=hobbiesState;
+            saveContributionInformation(contributionInformation)
             handleNext();
         }
         return sectionIsValid
@@ -142,11 +144,13 @@ function PersonalInformation(props) {
     const getStepContent=(index)=> {
         switch (index) {
             case 0:
-                return <BiographicalInformation personalInformationRef={setBiographicalInformationChildRef}/>;
+                return <SpecialTalents contributionInformationRef={setSpecialTalentChildRef}/>;
             case 1:
-                return <BasicInformation personalInformationRef={setBasicInformationChildRef}/>;
+                return <Hobbies contributionInformationRef={setHobbiesChildRef}/>;
             case 2:
-                return <AddressDetails personalInformationRef={setAddressDetailsChildRef}/>;
+                return <Interests contributionInformationRef={setInterestsChildRef}/>;
+            case 3:
+                return <Availability contributionInformationRef={setAvailabilityChildRef}/>
             default:
                 return null;
         }
@@ -197,22 +201,22 @@ function PersonalInformation(props) {
     );
 }
 
-PersonalInformation.propTypes={
-    personalInformation:PropTypes.object,
-    savePersonalInformation:PropTypes.func
+ContributionInformation.propTypes={
+    contributionInformation:PropTypes.object,
+    saveContributionInformation:PropTypes.func
 };
 
 export const mapStateToProps = (state) => {
-    const personalInformation = state.volunteerDetails.personalInformation;
+    const contributionInformation = state.volunteerDetails.contributionInformation;
     return {
-        personalInformation: personalInformation
+        contributionInformation: contributionInformation
     }
 };
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        savePersonalInformation: bindActionCreators(VolunteerActions.SavePersonalInformation, dispatch)
+        saveContributionInformation: bindActionCreators(VolunteerActions.SaveContributionInformation, dispatch)
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(PersonalInformation)
+export default connect(mapStateToProps,mapDispatchToProps)(ContributionInformation)

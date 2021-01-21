@@ -13,10 +13,10 @@ const VolunteerReducer = (state = InitialState.volunteerDetails, action) => {
                 ...state,
                 personalInformation:action.data
             };
-        case Types.STORE_EXPERIENCE_INFORMATION:
+        case Types.STORE_CONTRIBUTION_INFORMATION:
             return {
                 ...state,
-                experienceInformation:action.data
+                contributionInformation:action.data
             };
         case Types.STORE_REFERENCE_INFORMATION:
             return {

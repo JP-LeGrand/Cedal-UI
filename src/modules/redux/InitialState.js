@@ -9,7 +9,7 @@ export default {
       addressDetails:{},
       description:""
     },
-    experienceInformation: {},
+    contributionInformation: {},
     referenceInformation: {},
     screeningInformation: {},
     volunteers: []
