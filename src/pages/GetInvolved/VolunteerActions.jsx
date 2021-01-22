@@ -8,6 +8,10 @@ export const SaveContributionInformation = (contributionInformation) => (dispatc
     dispatch(UpdateVolunteerStore(types.STORE_CONTRIBUTION_INFORMATION, contributionInformation))
 };
 
+export const SaveResumeInformation = (resumeInformation) => (dispatch) => {
+    dispatch(UpdateVolunteerStore(types.STORE_RESUME_INFORMATION, resumeInformation))
+};
+
 export const UpdateVolunteerStore = (type, data) => {
     return {
         type: type,

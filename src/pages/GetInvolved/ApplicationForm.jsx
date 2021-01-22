@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import PersonalInformation from "./PersonalInformation/PersonalInformation";
 import ContributionInformation from "./ContributionInformation/ContributionInformation";
+import ResumeInformation from "./ResumeSection/ResumeInformation";
 import Grid from "@material-ui/core/Grid";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import { Stepper, Step, StepLabel, Container } from "@material-ui/core";
@@ -19,30 +20,35 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function getSteps() {
-    return ["Personal Information", "Contribution Details", "Screening", "Summary"];
-}
-
-const getStepContent = stepIndex => {
-    switch (stepIndex) {
-        case 0:
-            return <PersonalInformation/>
-        case 1:
-            return <ContributionInformation/>
-        case 2:
-            return null;
-        case 3:
-            return null;
-        default:
-            return null;
-    }
-};
 
 export default function HorizontalNonLinearAlternativeLabelStepper() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
+    const [personalInformationRef, setPersonalInformationRef] = useState();
+    const [contributionInformationRef, setContributionInformationRef] = useState();
+    const [resumeInformationRef, setResumeInformationRef] = useState();
     const [completed] = React.useState(new Set());
     const [skipped] = React.useState(new Set());
+
+    const getSteps =()=> {
+        return ["Personal Information", "Contribution Details", "Screening", "Summary"];
+    }
+    
+    const getStepContent = (stepIndex) => {
+        switch (stepIndex) {
+            case 0:
+                return <PersonalInformation nextSectionCallBackRef={setPersonalInformationRef}/>;
+            case 1:
+                return <ContributionInformation nextSectionCallBackRef={setContributionInformationRef}/>;
+            case 2:
+                return <ResumeInformation nextSectionCallBackRef={setContributionInformationRef}/>;
+            case 3:
+                return null;
+            default:
+                return null;
+        }
+    };
+
     const steps = getSteps();
 
     const totalSteps = () => {
@@ -75,9 +81,34 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
         setActiveStep(newActiveStep);
     };
 
+    const validateSection = () => {
+        if(activeStep === 0 && personalInformationRef.validateAddressDetails()){
+            handleNext()
+        }
+        if(activeStep === 1 && contributionInformationRef.validateAvailability()){
+            handleNext()
+        }
+        if(activeStep === 2 && resumeInformationRef.validateIdentification()){
+            handleNext()
+        }
+    }
+
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
+
+    const disableNextButton = () => {
+        if (activeStep === 0 && personalInformationRef?.activeStep !== 2){
+                return true
+        }
+        if (activeStep === 1 && contributionInformationRef?.activeStep !== 3){
+            return true
+        }
+        if (activeStep === 2 && resumeInformationRef?.activeStep !== 1){
+            return true
+        }
+        return false
+    }
 
     return (
         <div className={classes.root}>
@@ -107,7 +138,11 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
                             </Button>
                         </Grid>
                         <Grid>
-                            <Button variant="contained" color="primary" onClick={handleNext}>
+                            <Button 
+                                disabled ={disableNextButton()}
+                                variant="contained" 
+                                color="primary" 
+                                onClick={validateSection}>
                                 {activeStep === steps.length - 1 ? "Submit" : "Next"}
                             </Button>
                         </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import AddressDetails from "./AddressDetails/AddressDetails";
 import BiographicalInformation from "./BiographicalInformation/BiographicalInformation";
 import BasicInformation from "./BasicInformation/BasicInformation";
@@ -43,11 +43,12 @@ function getSteps() {
 }
 
 function PersonalInformation(props) {
+    const {nextSectionCallBackRef}=props;
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [biographicalInformationChildRef, setBiographicalInformationChildRef] = React.useState({});
-    const [basicInformationChildRef, setBasicInformationChildRef] = React.useState({});
-    const [addressDetailsChildRef, setAddressDetailsChildRef] = React.useState({});
+    const [activeStep, setActiveStep] = useState(0);
+    const [biographicalInformationChildRef, setBiographicalInformationChildRef] = useState({});
+    const [basicInformationChildRef, setBasicInformationChildRef] = useState({});
+    const [addressDetailsChildRef, setAddressDetailsChildRef] = useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -152,6 +153,10 @@ function PersonalInformation(props) {
         }
     };
 
+    useEffect(() => {
+        nextSectionCallBackRef({validateAddressDetails, activeStep}) 
+    });
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -171,6 +176,7 @@ function PersonalInformation(props) {
                                                 Back
                                             </Button>
                                             <Button
+                                                disabled={activeStep === steps.length -1}
                                                 variant="contained"
                                                 color="primary"
                                                 onClick={navigateToNextSection}
@@ -199,7 +205,8 @@ function PersonalInformation(props) {
 
 PersonalInformation.propTypes={
     personalInformation:PropTypes.object,
-    savePersonalInformation:PropTypes.func
+    savePersonalInformation:PropTypes.func,
+    nextSectionCallBackRef: PropTypes.func
 };
 
 export const mapStateToProps = (state) => {

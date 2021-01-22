@@ -1,8 +1,6 @@
-import React, {useEffect} from "react";
-import Availability from "./Availability";
-import SpecialTalents from "./SpecialTalents";
-import Hobbies from "./Hobbies";
-import Interests from "./Interests";
+import React from "react";
+import Resume from "./Resume";
+import Identification from "./Identification";
 import {Grid} from "@material-ui/core";
 import {bindActionCreators} from "redux";
 import * as VolunteerActions from "../VolunteerActions";
@@ -37,21 +35,16 @@ const useStyles = makeStyles((theme) =>
 
 function getSteps() {
     return [
-        "Special Talents",
-        "Hobbies",
-        "Interests",
-        "Availability"
+        "Resume",
+        "Identification",
     ];
 }
 
-function ContributionInformation(props) {
-    const {nextSectionCallBackRef}=props;
+function ResumeInformation(props) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [specialTalentChildRef, setSpecialTalentChildRef] = React.useState({});
-    const [interestsChildRef, setInterestsChildRef] = React.useState({});
-    const [availabilityChildRef, setAvailabilityChildRef] = React.useState({});
-    const [hobbiesChildRef, setHobbiesChildRef] = React.useState({});
+    const [resumeChildRef, setResumeChildRef] = React.useState({});
+    const [identificationChildRef, setIdentificationChildRef] = React.useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -70,66 +63,34 @@ function ContributionInformation(props) {
     function isSectionValid (section)  {
         switch (section) {
             case 0:
-                return validateSpecialTalent();
+                return validateResume();
             case 1:
-                return validateHobbies();
-            case 2:
-                return validateInterests();
-            case 3:
-                return validateAvailability();
+                return validateIdentification();
             default:
                 return false
         }
     }
 
-    function validateSpecialTalent(){
-        const {contributionInformation, saveContributionInformation} = props;
+    function validateResume(){
+        const {resumeInformation, saveResumeInformation} = props;
 
-        let sectionIsValid = specialTalentChildRef.validateSpecialTalents() ?? false;
+        let sectionIsValid = resumeChildRef.validateResume() ?? false;
         if(sectionIsValid){
-            contributionInformation.specialTalent={
-                skills: specialTalentChildRef.state,
-                otherSkills: specialTalentChildRef.other.other
-            };
-            saveContributionInformation(contributionInformation)
+            let resumeState = resumeChildRef.state;
+            resumeInformation.resume= resumeState;
+            saveResumeInformation(resumeInformation)
             handleNext();
         }
     }
 
-    function validateInterests(){
-        const {contributionInformation, saveContributionInformation} = props;
+    function validateIdentification(){
+        const {resumeInformation, saveResumeInformation} = props;
 
-        let sectionIsValid = interestsChildRef?.validateInterests() ?? false;
+        let sectionIsValid = identificationChildRef?.validateIdentification() ?? false;
         if(sectionIsValid){
-            let interestsState=interestsChildRef.state;
-            contributionInformation.interests= interestsState;
-            saveContributionInformation(contributionInformation)
-            handleNext();
-        }
-        return sectionIsValid
-    }
-
-    function validateAvailability(){
-        const {contributionInformation, saveContributionInformation} = props;
-
-        let sectionIsValid = availabilityChildRef?.validateAvailability() ?? false;
-        if(sectionIsValid){
-            let availabilityState=availabilityChildRef.state;
-            contributionInformation.availability=availabilityState;
-            saveContributionInformation(contributionInformation)
-            handleNext();
-        }
-        return sectionIsValid
-    }
-
-    function validateHobbies(){
-        const {contributionInformation, saveContributionInformation} = props;
-
-        let sectionIsValid = hobbiesChildRef?.validateHobbies() ?? false;
-        if(sectionIsValid){
-            let hobbiesState=hobbiesChildRef.state;
-            contributionInformation.hobbies=hobbiesState;
-            saveContributionInformation(contributionInformation)
+            let identificationState=identificationChildRef.state;
+            ResumeInformation.identification= identificationState;
+            saveResumeInformation(resumeInformation)
             handleNext();
         }
         return sectionIsValid
@@ -145,21 +106,13 @@ function ContributionInformation(props) {
     const getStepContent=(index)=> {
         switch (index) {
             case 0:
-                return <SpecialTalents contributionInformationRef={setSpecialTalentChildRef}/>;
+                return <Resume resumeInformationRef={setResumeChildRef}/>;
             case 1:
-                return <Hobbies contributionInformationRef={setHobbiesChildRef}/>;
-            case 2:
-                return <Interests contributionInformationRef={setInterestsChildRef}/>;
-            case 3:
-                return <Availability contributionInformationRef={setAvailabilityChildRef}/>
+                return <Identification resumeInformationRef={setIdentificationChildRef}/>;
             default:
                 return null;
         }
     };
-
-    useEffect(() => {
-        nextSectionCallBackRef({validateAvailability, activeStep}) 
-    });
 
     return (
         <Grid container>
@@ -180,7 +133,6 @@ function ContributionInformation(props) {
                                                 Back
                                             </Button>
                                             <Button
-                                                disabled={activeStep === steps.length -1}
                                                 variant="contained"
                                                 color="primary"
                                                 onClick={navigateToNextSection}
@@ -207,23 +159,23 @@ function ContributionInformation(props) {
     );
 }
 
-ContributionInformation.propTypes={
-    contributionInformation:PropTypes.object,
-    saveContributionInformation:PropTypes.func,
+ResumeInformation.propTypes={
+    resumeInformation:PropTypes.object,
+    saveResumeInformation:PropTypes.func,
     nextSectionCallBackRef: PropTypes.func
 };
 
 export const mapStateToProps = (state) => {
-    const contributionInformation = state.volunteerDetails.contributionInformation;
+    const resumeInformation = state.volunteerDetails.resumeInformation;
     return {
-        contributionInformation: contributionInformation
+        resumeInformation: resumeInformation
     }
 };
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        saveContributionInformation: bindActionCreators(VolunteerActions.SaveContributionInformation, dispatch)
+        saveResumeInformation: bindActionCreators(VolunteerActions.SaveResumeInformation, dispatch)
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ContributionInformation)
+export default connect(mapStateToProps,mapDispatchToProps)(ResumeInformation)
