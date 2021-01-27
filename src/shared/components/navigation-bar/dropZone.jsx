@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import {DropzoneDialog} from 'material-ui-dropzone'
 import {Button} from '@material-ui/core';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
 
-export default class DropzoneDialogExample extends Component {
+class DropzoneDialogExample extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,8 +38,22 @@ export default class DropzoneDialogExample extends Component {
     }
 
     componentDidMount(){
-        const {fileRef} = this.props;
+        const {fileRef, identification, resume, fileUploadSection} = this.props;
         fileRef(this);
+
+        if(fileUploadSection === "resume" && resume?.state){
+            this.setState({
+                ...this.state,
+                ...resume.state
+            });
+        }
+
+        if(fileUploadSection === "identification" && identification?.state){
+            this.setState({
+                ...this.state,
+                ...identification.state
+            });
+        }
     }
 
     render() {
@@ -61,5 +76,18 @@ export default class DropzoneDialogExample extends Component {
 }
 
 DropzoneDialogExample.propTypes ={
-    fileRef: PropTypes.object
+    fileRef: PropTypes.object,
+    identification: PropTypes.object,
+    resume: PropTypes.object,
+    fileUploadSection: PropTypes.string
 }
+
+export const mapStateToProps = (state) => {
+    const resumeInformation = state.volunteerDetails.resumeInformation;
+    return {
+        identification: resumeInformation.identification,
+        resume: resumeInformation.resume
+    }
+}
+
+export default connect(mapStateToProps)(DropzoneDialogExample)

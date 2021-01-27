@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types'
 import {connect} from "react-redux";
-import * as Collections from "../../../shared/Collections/Collections";
 import * as Colors from "../../../shared/styles/themes/colours";
 import DropZone from "../../../shared/components/navigation-bar/dropZone";
 import { Typography } from "@material-ui/core";
@@ -24,9 +23,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Resume(props) {
-    const classes = useStyles();
     const [state, setState] = React.useState();
-    const {resumeInformationRef, resumeInformation}=props;
+    const {resumeInformationRef}=props;
 
     const validateResume=()=>{
         let validDropZone = state.validateDropZone()
@@ -37,19 +35,15 @@ function Resume(props) {
         resumeInformationRef({state, validateResume})
     },[state]);
 
-    useEffect(() => {
-        if(resumeInformation?.resume){
-            setState(...state, ...resumeInformation?.resume)
-        } 
-    },[resumeInformation?.resume]);
-
     return (
         <Grid container>
         <Grid>
             <Typography>Please upload your Curriculum Vitae (CV) or Resume</Typography>
         </Grid>
         <Grid item xs={12}>
-           <DropZone fileRef={setState}/>
+           <DropZone 
+           fileRef={setState} 
+           fileUploadSection={"resume"}/>
         </Grid>
     </Grid>
     );

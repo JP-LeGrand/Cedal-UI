@@ -28,19 +28,13 @@ function Identification(props) {
     const {resumeInformationRef, resumeInformation}=props;
 
     const validateIdentification=()=>{
-        let validDropZone = setState.validateDropZone()
+        let validDropZone = state.validateDropZone()
         return !(validDropZone)
     };
 
     useEffect(() => {
         resumeInformationRef({state, validateIdentification})
     },[state]);
-
-    useEffect(() => {
-        if(resumeInformation?.identification){
-            setState(...state, ...resumeInformation?.identification)
-        } 
-    },[resumeInformation?.identification]);
 
     return (
         <Grid container>
@@ -50,7 +44,9 @@ function Identification(props) {
             </Typography>
         </Grid>
         <Grid item xs={12}>
-            <DropZone fileRef={setState}/>
+            <DropZone 
+            fileRef={setState} 
+            fileUploadSection={"identification"}/>
         </Grid>
     </Grid>
     );

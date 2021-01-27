@@ -4,9 +4,14 @@ import Button from "@material-ui/core/Button";
 import PersonalInformation from "./PersonalInformation/PersonalInformation";
 import ContributionInformation from "./ContributionInformation/ContributionInformation";
 import ResumeInformation from "./ResumeSection/ResumeInformation";
+import Summary from "./SummarySection/Summary";
 import Grid from "@material-ui/core/Grid";
 import NavigationBar from "../../shared/components/navigation-bar/navigationBar";
 import { Stepper, Step, StepLabel, Container } from "@material-ui/core";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as VolunteerActions from "../GetInvolved/VolunteerActions";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,8 +26,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function HorizontalNonLinearAlternativeLabelStepper() {
+const HorizontalNonLinearAlternativeLabelStepper = (props) => {
     const classes = useStyles();
+    const {submitVolunteerInformation, volunteerDetails} = props
     const [activeStep, setActiveStep] = useState(0);
     const [personalInformationRef, setPersonalInformationRef] = useState();
     const [contributionInformationRef, setContributionInformationRef] = useState();
@@ -31,7 +37,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     const [skipped] = React.useState(new Set());
 
     const getSteps =()=> {
-        return ["Personal Information", "Contribution Details", "Screening", "Summary"];
+        return ["Personal Information", "Contribution Information", "Resume Information", "Summary Screen"];
     }
     
     const getStepContent = (stepIndex) => {
@@ -41,9 +47,9 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
             case 1:
                 return <ContributionInformation nextSectionCallBackRef={setContributionInformationRef}/>;
             case 2:
-                return <ResumeInformation nextSectionCallBackRef={setContributionInformationRef}/>;
+                return <ResumeInformation nextSectionCallBackRef={setResumeInformationRef}/>;
             case 3:
-                return null;
+                return <Summary/>;
             default:
                 return null;
         }
@@ -71,6 +77,10 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
         return activeStep === totalSteps() - 1;
     };
 
+    const submitVolunteerDetails = () => {
+        submitVolunteerInformation(volunteerDetails);
+    }
+
     const handleNext = () => {
         const newActiveStep =
             isLastStep() && !allStepsCompleted()
@@ -90,6 +100,9 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
         }
         if(activeStep === 2 && resumeInformationRef.validateIdentification()){
             handleNext()
+        }
+        if(activeStep === 3){
+            submitVolunteerDetails()
         }
     }
 
@@ -152,3 +165,23 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
         </div>
     );
 }
+
+HorizontalNonLinearAlternativeLabelStepper.propTypes ={
+    volunteerDetails: PropTypes.object,
+    submitVolunteerInformation:PropTypes.func
+}
+
+export const mapStateToProps = (state) => {
+    const volunteerDetails = state.volunteerDetails;
+    return {
+        volunteerDetails
+    }
+};
+
+const mapDispatchToProps = ( dispatch ) => {
+    return {
+        submitVolunteerInformation: bindActionCreators(VolunteerActions.SubmitVolunteerInformation, dispatch)
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HorizontalNonLinearAlternativeLabelStepper)

@@ -5,9 +5,7 @@ export default {
   volunteerDetails: {
     personalInformation: {},
     contributionInformation: {},
-    resumeInformation: {},
-    summaryInformation: {},
-    volunteers: []
+    resumeInformation: {}
   },
   eventDetails: {
     eventInformation: {},

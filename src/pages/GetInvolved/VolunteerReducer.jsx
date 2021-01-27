@@ -23,7 +23,7 @@ const VolunteerReducer = (state = InitialState.volunteerDetails, action) => {
                 ...state,
                 resumeInformation:action.data
             };
-        case Types.STORE_SCREENING_INFROMATION:
+        case Types.SUBMIT_VOLUNTEER_INFORMATION:
             return {
                 ...state,
                 screeningInformation:action.data

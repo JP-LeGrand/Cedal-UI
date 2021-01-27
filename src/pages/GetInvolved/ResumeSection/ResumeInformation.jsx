@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Resume from "./Resume";
 import Identification from "./Identification";
 import {Grid} from "@material-ui/core";
@@ -41,6 +41,7 @@ function getSteps() {
 }
 
 function ResumeInformation(props) {
+    const {nextSectionCallBackRef}=props;
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const [resumeChildRef, setResumeChildRef] = React.useState({});
@@ -114,6 +115,10 @@ function ResumeInformation(props) {
         }
     };
 
+    useEffect(() => {
+        nextSectionCallBackRef({validateIdentification, activeStep}) 
+    });
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -133,6 +138,7 @@ function ResumeInformation(props) {
                                                 Back
                                             </Button>
                                             <Button
+                                                disabled={activeStep === steps.length -1}
                                                 variant="contained"
                                                 color="primary"
                                                 onClick={navigateToNextSection}
