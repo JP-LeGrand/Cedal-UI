@@ -137,11 +137,13 @@ function BiographicalInformation(props) {
 
     // React's useEffect hook combines componentDidMount , componentDidUpdate and componentWillUnmount lifecycle methods.
     useEffect(() => {
-        setState({
+        if(personalInformation?.biographicalInformation){
+              setState({
             ...state,
             ...personalInformation.biographicalInformation,
         })
-    },[personalInformation.biographicalInformation]);
+        }
+    },[personalInformation?.biographicalInformation]);
 
     useEffect(() => {
         personalInformationRef({state, validateBiographicalInformation})

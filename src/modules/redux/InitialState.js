@@ -3,16 +3,9 @@ export default {
     ourFocus:[]
   },
   volunteerDetails: {
-    personalInformation: {
-      biographicalInformation:{},
-      basicInformation:{},
-      addressDetails:{},
-      description:""
-    },
-    experienceInformation: {},
-    referenceInformation: {},
-    screeningInformation: {},
-    volunteers: []
+    personalInformation: {},
+    contributionInformation: {},
+    resumeInformation: {}
   },
   eventDetails: {
     eventInformation: {},

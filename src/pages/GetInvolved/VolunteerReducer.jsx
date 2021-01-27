@@ -13,17 +13,17 @@ const VolunteerReducer = (state = InitialState.volunteerDetails, action) => {
                 ...state,
                 personalInformation:action.data
             };
-        case Types.STORE_EXPERIENCE_INFORMATION:
+        case Types.STORE_CONTRIBUTION_INFORMATION:
             return {
                 ...state,
-                experienceInformation:action.data
+                contributionInformation:action.data
             };
-        case Types.STORE_REFERENCE_INFORMATION:
+        case Types.STORE_RESUME_INFORMATION:
             return {
                 ...state,
-                referenceInformation:action.data
+                resumeInformation:action.data
             };
-        case Types.STORE_SCREENING_INFROMATION:
+        case Types.SUBMIT_VOLUNTEER_INFORMATION:
             return {
                 ...state,
                 screeningInformation:action.data

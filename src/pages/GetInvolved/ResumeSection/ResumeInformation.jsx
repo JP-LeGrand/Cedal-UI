@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react";
-import AddressDetails from "./AddressDetails/AddressDetails";
-import BiographicalInformation from "./BiographicalInformation/BiographicalInformation";
-import BasicInformation from "./BasicInformation/BasicInformation";
+import React, {useEffect} from "react";
+import Resume from "./Resume";
+import Identification from "./Identification";
 import {Grid} from "@material-ui/core";
 import {bindActionCreators} from "redux";
 import * as VolunteerActions from "../VolunteerActions";
@@ -36,19 +35,17 @@ const useStyles = makeStyles((theme) =>
 
 function getSteps() {
     return [
-        "Biographical Information",
-        "Basic Information",
-        "Address Details"
+        "Resume",
+        "Identification",
     ];
 }
 
-function PersonalInformation(props) {
+function ResumeInformation(props) {
     const {nextSectionCallBackRef}=props;
     const classes = useStyles();
-    const [activeStep, setActiveStep] = useState(0);
-    const [biographicalInformationChildRef, setBiographicalInformationChildRef] = useState({});
-    const [basicInformationChildRef, setBasicInformationChildRef] = useState({});
-    const [addressDetailsChildRef, setAddressDetailsChildRef] = useState({});
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [resumeChildRef, setResumeChildRef] = React.useState({});
+    const [identificationChildRef, setIdentificationChildRef] = React.useState({});
     const steps = getSteps();
     const totalSteps=getSteps().length;
 
@@ -67,67 +64,34 @@ function PersonalInformation(props) {
     function isSectionValid (section)  {
         switch (section) {
             case 0:
-                return validateBiographicalInformation();
+                return validateResume();
             case 1:
-                return validateBasicInformation();
-            case 2:
-                return validateAddressDetails();
+                return validateIdentification();
             default:
                 return false
         }
     }
 
-    function validateBiographicalInformation(){
-        const {personalInformation, savePersonalInformation} = props;
+    function validateResume(){
+        const {resumeInformation, saveResumeInformation} = props;
 
-        let sectionIsValid = biographicalInformationChildRef?.validateBiographicalInformation() ?? false;
+        let sectionIsValid = resumeChildRef.validateResume() ?? false;
         if(sectionIsValid){
-            let biographicalState=biographicalInformationChildRef.state;
-            personalInformation.biographicalInformation={
-                firstName:biographicalState.firstName,
-                lastName:biographicalState.lastName,
-                dateOfBirth:biographicalState.dateOfBirth,
-                contactNumber:biographicalState.contactNumber,
-                emailAddress:biographicalState.emailAddress,
-            };
-            savePersonalInformation(personalInformation)
+            let resumeState = resumeChildRef.state;
+            resumeInformation.resume= resumeState;
+            saveResumeInformation(resumeInformation)
             handleNext();
         }
-        return sectionIsValid
     }
 
-    function validateBasicInformation(){
-        const {personalInformation, savePersonalInformation} = props;
+    function validateIdentification(){
+        const {resumeInformation, saveResumeInformation} = props;
 
-        let sectionIsValid = basicInformationChildRef?.validateBasicInformation() ?? false;
+        let sectionIsValid = identificationChildRef?.validateIdentification() ?? false;
         if(sectionIsValid){
-            let basicState=basicInformationChildRef.state;
-            personalInformation.basicInformation={
-                driversLicence: basicState.driversLicence,
-                disabilities: basicState.disabilities,
-                disabilitiesDetails: basicState.disabilitiesDetails,
-                vehicle: basicState.vehicle,
-            };
-            savePersonalInformation(personalInformation)
-            handleNext();
-        }
-        return sectionIsValid
-    }
-
-    function validateAddressDetails(){
-        const {personalInformation, savePersonalInformation} = props;
-
-        let sectionIsValid = addressDetailsChildRef?.validateAddressDetails() ?? false;
-        if(sectionIsValid){
-            let addressDetailsState=addressDetailsChildRef.state;
-            personalInformation.addressDetails={
-                streetName: addressDetailsState.streetName,
-                city:addressDetailsState.city,
-                postalCode:addressDetailsState.postalCode,
-                province:addressDetailsState.province,
-                country:addressDetailsState.country
-            };
-            savePersonalInformation(personalInformation)
+            let identificationState=identificationChildRef.state;
+            ResumeInformation.identification= identificationState;
+            saveResumeInformation(resumeInformation)
             handleNext();
         }
         return sectionIsValid
@@ -143,18 +107,16 @@ function PersonalInformation(props) {
     const getStepContent=(index)=> {
         switch (index) {
             case 0:
-                return <BiographicalInformation personalInformationRef={setBiographicalInformationChildRef}/>;
+                return <Resume resumeInformationRef={setResumeChildRef}/>;
             case 1:
-                return <BasicInformation personalInformationRef={setBasicInformationChildRef}/>;
-            case 2:
-                return <AddressDetails personalInformationRef={setAddressDetailsChildRef}/>;
+                return <Identification resumeInformationRef={setIdentificationChildRef}/>;
             default:
                 return null;
         }
     };
 
     useEffect(() => {
-        nextSectionCallBackRef({validateAddressDetails, activeStep}) 
+        nextSectionCallBackRef({validateIdentification, activeStep}) 
     });
 
     return (
@@ -203,23 +165,23 @@ function PersonalInformation(props) {
     );
 }
 
-PersonalInformation.propTypes={
-    personalInformation:PropTypes.object,
-    savePersonalInformation:PropTypes.func,
+ResumeInformation.propTypes={
+    resumeInformation:PropTypes.object,
+    saveResumeInformation:PropTypes.func,
     nextSectionCallBackRef: PropTypes.func
 };
 
 export const mapStateToProps = (state) => {
-    const personalInformation = state.volunteerDetails.personalInformation;
+    const resumeInformation = state.volunteerDetails.resumeInformation;
     return {
-        personalInformation: personalInformation
+        resumeInformation: resumeInformation
     }
 };
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        savePersonalInformation: bindActionCreators(VolunteerActions.SavePersonalInformation, dispatch)
+        saveResumeInformation: bindActionCreators(VolunteerActions.SaveResumeInformation, dispatch)
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(PersonalInformation)
+export default connect(mapStateToProps,mapDispatchToProps)(ResumeInformation)
