@@ -7,13 +7,13 @@ import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   highlight: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 }));
 
 export default function MenuAppBar(props) {
@@ -82,10 +82,10 @@ export default function MenuAppBar(props) {
   );
 }
 
-MenuAppBar.propTypes={
-  donateIsActive:PropTypes.bool,
-  eventsAndNewsIsActive:PropTypes.bool,
-  getInvolvedIsActive:PropTypes.bool,
-  ourWorkIsActive:PropTypes.bool,
-  homeIsActive:PropTypes.bool,
+MenuAppBar.propTypes = {
+  donateIsActive: PropTypes.bool,
+  eventsAndNewsIsActive: PropTypes.bool,
+  getInvolvedIsActive: PropTypes.bool,
+  ourWorkIsActive: PropTypes.bool,
+  homeIsActive: PropTypes.bool,
 };

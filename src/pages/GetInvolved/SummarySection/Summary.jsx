@@ -7,24 +7,26 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    sectionHeader:{
-        backgroundColor: theme.colors.oceanGreen,
+    sectionHeader: {
+      backgroundColor: theme.colors.oceanGreen,
     },
-    sectionHeading:{
-        ...theme.typography.h4BoldWhite,
-        textAlign: "left",
-    }
+    sectionHeading: {
+      ...theme.typography.h4BoldWhite,
+      textAlign: "left",
+    },
   })
 );
 
 export default function Summary() {
-    const classes = useStyles();
+  const classes = useStyles();
 
   return (
     <Grid container>
       <Grid item xs={12}>
         <Grid item xs={12} className={classes.sectionHeader}>
-          <Typography className={classes.sectionHeading}>Personal Information</Typography>
+          <Typography className={classes.sectionHeading}>
+            Personal Information
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <PersonalInformation />
@@ -33,19 +35,23 @@ export default function Summary() {
 
       <Grid item xs={12}>
         <Grid item xs={12} className={classes.sectionHeader}>
-          <Typography className={classes.sectionHeading}>Contribution Information</Typography>
+          <Typography className={classes.sectionHeading}>
+            Contribution Information
+          </Typography>
         </Grid>
         <Grid item xs={12}>
-            <ContributionInformation/>
+          <ContributionInformation />
         </Grid>
       </Grid>
 
       <Grid item xs={12}>
         <Grid item xs={12} className={classes.sectionHeader}>
-          <Typography className={classes.sectionHeading}>Screening Information</Typography>
+          <Typography className={classes.sectionHeading}>
+            Screening Information
+          </Typography>
         </Grid>
         <Grid item xs={12}>
-            <ResumeInformation/>
+          <ResumeInformation />
         </Grid>
       </Grid>
     </Grid>

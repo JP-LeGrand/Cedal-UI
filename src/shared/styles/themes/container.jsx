@@ -5,21 +5,21 @@ export const containers = {
     height: "100%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   containerFlexStart: {
     height: "100%",
     display: "flex",
     alignItems: "flex-start",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   gridContainer: {
-    maxWidth: "400px"
+    maxWidth: "400px",
   },
   gridContainerFullWidth: {
-    maxWidth: "100%"
+    maxWidth: "100%",
   },
   athensGrayBackground: {
-    backgroundColor: Colors.blackRussian
-  }
+    backgroundColor: Colors.blackRussian,
+  },
 };

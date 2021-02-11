@@ -6,10 +6,10 @@ import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-  gridBorder:{
-    borderTop: "1px solid",
-    borderBottom: "1px solid"
-  }
+    gridBorder: {
+      borderTop: "1px solid",
+      borderBottom: "1px solid",
+    },
   })
 );
 

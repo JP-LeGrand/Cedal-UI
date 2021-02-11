@@ -12,13 +12,13 @@ export const buttons = {
     "&:hover": {
       color: Colors.white,
       backgroundColor: Colors.toreabay,
-      borderColor: Colors.toreabay
+      borderColor: Colors.toreabay,
     },
     "&:disabled": {
       color: Colors.white,
       backgroundColor: Colors.manatee,
-      borderColor: Colors.manatee
-    }
+      borderColor: Colors.manatee,
+    },
   },
   secondaryButton: {
     color: Colors.white,
@@ -31,20 +31,20 @@ export const buttons = {
     "&:hover": {
       color: Colors.white,
       backgroundColor: Colors.toreabay,
-      borderColor: Colors.toreabay
+      borderColor: Colors.toreabay,
     },
     "&:disabled": {
       color: Colors.white,
       backgroundColor: Colors.manatee,
-      borderColor: Colors.manatee
-    }
+      borderColor: Colors.manatee,
+    },
   },
   iconButton: {
     padding: "0",
     verticalAlign: "middle",
     "&:hover": {
-      backgroundColor: "transparent"
-    }
+      backgroundColor: "transparent",
+    },
   },
   primaryToggleButton: {
     color: Colors.white,
@@ -58,12 +58,12 @@ export const buttons = {
       color: Colors.white,
       backgroundColor: Colors.manatee,
       borderColor: Colors.manatee,
-      opacity: 1
-    }
+      opacity: 1,
+    },
   },
   leftToggleButtonBorderRadius: {
     borderTopRightRadius: "0px",
-    borderBottomRightRadius: "0px"
+    borderBottomRightRadius: "0px",
   },
   secondaryToggleButton: {
     color: Colors.manatee,
@@ -77,19 +77,19 @@ export const buttons = {
       color: Colors.manatee,
       backgroundColor: Colors.white,
       borderColor: Colors.manatee,
-      opacity: 1
-    }
+      opacity: 1,
+    },
   },
   rightToggleButtonBorderRadius: {
     borderTopLeftRadius: "0px",
-    borderBottomLeftRadius: "0px"
+    borderBottomLeftRadius: "0px",
   },
   buttonFlexStart: {
     display: "flex",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   buttonFlexEnd: {
     display: "flex",
-    justifyContent: "flex-end"
-  }
+    justifyContent: "flex-end",
+  },
 };

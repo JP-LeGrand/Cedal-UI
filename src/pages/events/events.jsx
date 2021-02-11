@@ -9,7 +9,7 @@ class EventsAndNews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cedalEvents: this.props.eventDetails.cedalEvents
+      cedalEvents: this.props.eventDetails.cedalEvents,
     };
   }
 
@@ -37,10 +37,10 @@ class EventsAndNews extends React.Component {
 }
 
 EventsAndNews.propTypes = {
-  cedalEvents: PropTypes.array
+  cedalEvents: PropTypes.array,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   eventDetails: state.eventDetails,
   cedalEvents: state.eventDetails.cedalEvents,
 });

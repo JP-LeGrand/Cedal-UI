@@ -1,16 +1,15 @@
 export default {
   homePageDetails: {
-    ourFocus:[]
+    ourFocus: [],
   },
   volunteerDetails: {
     personalInformation: {},
     contributionInformation: {},
-    resumeInformation: {}
+    resumeInformation: {},
   },
   eventDetails: {
     eventInformation: {},
-    cedalEvents: []
+    cedalEvents: [],
   },
-  subscriptionLetter:{
-  }
+  subscriptionLetter: {},
 };

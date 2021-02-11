@@ -1,24 +1,42 @@
-import * as types from './VolunteerActionTypes'
+import * as types from "./VolunteerActionTypes";
 
 export const SavePersonalInformation = (personalInformation) => (dispatch) => {
-    dispatch(UpdateVolunteerStore(types.STORE_PERSONAL_INFORMATION, personalInformation))
+  dispatch(
+    UpdateVolunteerStore(types.STORE_PERSONAL_INFORMATION, personalInformation)
+  );
 };
 
-export const SaveContributionInformation = (contributionInformation) => (dispatch) => {
-    dispatch(UpdateVolunteerStore(types.STORE_CONTRIBUTION_INFORMATION, contributionInformation))
+export const SaveContributionInformation = (contributionInformation) => (
+  dispatch
+) => {
+  dispatch(
+    UpdateVolunteerStore(
+      types.STORE_CONTRIBUTION_INFORMATION,
+      contributionInformation
+    )
+  );
 };
 
 export const SaveResumeInformation = (resumeInformation) => (dispatch) => {
-    dispatch(UpdateVolunteerStore(types.STORE_RESUME_INFORMATION, resumeInformation))
+  dispatch(
+    UpdateVolunteerStore(types.STORE_RESUME_INFORMATION, resumeInformation)
+  );
 };
 
-export const SubmitVolunteerInformation = (volunteerInformation) => (dispatch) => {
-    dispatch(UpdateVolunteerStore(types.SUBMIT_VOLUNTEER_INFORMATION, volunteerInformation))
+export const SubmitVolunteerInformation = (volunteerInformation) => (
+  dispatch
+) => {
+  dispatch(
+    UpdateVolunteerStore(
+      types.SUBMIT_VOLUNTEER_INFORMATION,
+      volunteerInformation
+    )
+  );
 };
 
 export const UpdateVolunteerStore = (type, data) => {
-    return {
-        type: type,
-        data
-    }
+  return {
+    type: type,
+    data,
+  };
 };

@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { FormControl, TextField } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   textField: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 function EventDetails() {

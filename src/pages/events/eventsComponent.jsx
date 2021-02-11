@@ -6,14 +6,14 @@ import { FormControl, Button } from "@material-ui/core";
 import AddressDetails from "../getInvolved/PersonalInformation/AddressDetails/AddressDetails";
 import EventDetails from "./EventDetails";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   textField: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 function EventsComponent() {
