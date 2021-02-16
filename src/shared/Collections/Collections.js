@@ -1,88 +1,92 @@
-export const Skills = [{
-    skill: 'Artist',
+export const Skills = [
+  {
+    skill: "Artist",
     isChecked: false,
-},
-{
-    skill: 'Graphic Design',
+  },
+  {
+    skill: "Graphic Design",
     isChecked: false,
-},
-{
-    skill: 'Information Technology',
+  },
+  {
+    skill: "Information Technology",
     isChecked: false,
-},
-{
-    skill: 'Academic Support (Tutoring)',
+  },
+  {
+    skill: "Academic Support (Tutoring)",
     isChecked: false,
-},
-{
-    skill: 'Motivational Speaker',
+  },
+  {
+    skill: "Motivational Speaker",
     isChecked: false,
-},
-{
-    skill: 'Mental and Health Awareness',
+  },
+  {
+    skill: "Mental and Health Awareness",
     isChecked: false,
-},
-{
-    skill: 'Stage Performer',
+  },
+  {
+    skill: "Stage Performer",
     isChecked: false,
-},
-{
-    skill: 'Women Empowering',
+  },
+  {
+    skill: "Women Empowering",
     isChecked: false,
-},
-{
-    skill: 'Other',
+  },
+  {
+    skill: "Other",
     isChecked: false,
-}]
+  },
+];
 
-export const Focus = [{
-    skill: 'Academic Support',
+export const Focus = [
+  {
+    skill: "Academic Support",
     isChecked: false,
-},
-{
-    skill: 'Training in Good People Skills',
+  },
+  {
+    skill: "Training in Good People Skills",
     isChecked: false,
-},
-{
-    skill: 'Adolescent Health Awareness',
+  },
+  {
+    skill: "Adolescent Health Awareness",
     isChecked: false,
-},
-{
-    skill: 'Gender Equality and Women Empowerment',
+  },
+  {
+    skill: "Gender Equality and Women Empowerment",
     isChecked: false,
-}
-]
+  },
+];
 
-export const Days = [{
-    day: 'Monday',
+export const Days = [
+  {
+    day: "Monday",
     isChecked: false,
-},
-{
-    day: 'Tuesday',
+  },
+  {
+    day: "Tuesday",
     isChecked: false,
-},
-{
-    day: 'Wednesday',
+  },
+  {
+    day: "Wednesday",
     isChecked: false,
-},
-{
-    day: 'Thursday',
+  },
+  {
+    day: "Thursday",
     isChecked: false,
-},
-{
-    day: 'Friday',
+  },
+  {
+    day: "Friday",
     isChecked: false,
-},
-{
-    day: 'Saturday',
+  },
+  {
+    day: "Saturday",
     isChecked: false,
-},
-{
-    day: 'Sunday',
+  },
+  {
+    day: "Sunday",
     isChecked: false,
-},
-{
-    day: 'Public Holiday',
+  },
+  {
+    day: "Public Holiday",
     isChecked: false,
-}
-]
+  },
+];

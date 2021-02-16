@@ -6,20 +6,20 @@ const EventReducer = (state = InitialState.eventDetails, action) => {
     case Types.CREATE_EVENT:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case Types.GET_EVENTS:
       return {
         ...state,
-        cedalEvents: action.payload
+        cedalEvents: action.payload,
       };
     case Types.GET_EVENTS_FAILED:
       return {
         ...state,
         isEventsLoading: false,
         hasEvents: false,
-        errorLoadingInformation: true
-      }
+        errorLoadingInformation: true,
+      };
     default:
       return state;
   }

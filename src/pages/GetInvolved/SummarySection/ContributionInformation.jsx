@@ -6,24 +6,29 @@ import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    gridBorder:{
-        borderTop: "1px solid",
-        borderBottom: "1px solid"
-      }
+    gridBorder: {
+      borderTop: "1px solid",
+      borderBottom: "1px solid",
+    },
   })
 );
 
 function ContributionInformation(props) {
   const { contributionInformation } = props;
   const classes = useStyles();
-  const selectedSkills = contributionInformation.specialTalent.skills.filter(skill => skill.isChecked);
-  const selectedInterests = contributionInformation.interests.filter(interest => interest.isChecked);
-  const selectedDays = contributionInformation.availability.filter(day => day.isChecked);
+  const selectedSkills = contributionInformation.specialTalent.skills.filter(
+    (skill) => skill.isChecked
+  );
+  const selectedInterests = contributionInformation.interests.filter(
+    (interest) => interest.isChecked
+  );
+  const selectedDays = contributionInformation.availability.filter(
+    (day) => day.isChecked
+  );
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        
         <Grid item xs={12} className={classes.gridBorder}>
           <Typography>Special talents</Typography>
         </Grid>
@@ -32,9 +37,9 @@ function ContributionInformation(props) {
             <Typography>Skills</Typography>
           </Grid>
           <Grid item xs={6}>
-            {selectedSkills.map((skill, index) => 
+            {selectedSkills.map((skill, index) => (
               <Typography key={index}>{skill.skill}</Typography>
-            )}
+            ))}
           </Grid>
         </Grid>
 
@@ -43,9 +48,7 @@ function ContributionInformation(props) {
         </Grid>
         <Grid container justify={"space-between"}>
           <Grid item xs={6}>
-            <Typography>
-              What are your hobbies?
-            </Typography>
+            <Typography>What are your hobbies?</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography>{contributionInformation?.hobbies?.hobby}</Typography>
@@ -58,19 +61,16 @@ function ContributionInformation(props) {
         <Grid container justify={"space-between"}>
           <Grid item xs={6}>
             <Typography>
-                Which programs would you like to contribute to?
-            </Typography>   
+              Which programs would you like to contribute to?
+            </Typography>
           </Grid>
           <Grid item xs={6}>
-          {selectedInterests.map((interest, index) => 
-          <Typography key={index}>
-              {interest.skill}
-            </Typography>
-          )}
+            {selectedInterests.map((interest, index) => (
+              <Typography key={index}>{interest.skill}</Typography>
+            ))}
           </Grid>
         </Grid>
-        
-        
+
         <Grid item xs={12} className={classes.gridBorder}>
           <Typography>Availability</Typography>
         </Grid>
@@ -79,11 +79,9 @@ function ContributionInformation(props) {
             <Typography>What is your availability?</Typography>
           </Grid>
           <Grid item xs={6}>
-            {selectedDays.map((day, index) =>
-              <Typography key={index}>
-                {day.day}
-              </Typography>
-            )}
+            {selectedDays.map((day, index) => (
+              <Typography key={index}>{day.day}</Typography>
+            ))}
           </Grid>
         </Grid>
       </Grid>

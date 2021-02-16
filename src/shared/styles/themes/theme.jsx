@@ -34,13 +34,13 @@ const siteThemeSettings = {
     puertoRico: Colors.puertoRico,
     alabaster: Colors.alabaster,
     webOrange: Colors.webOrange,
-    oceanGreen: Colors.oceangreen
+    oceanGreen: Colors.oceangreen,
   },
   MuiButton: {
     label: {
-      textTransform: "lowercase"
-    }
-  }
+      textTransform: "lowercase",
+    },
+  },
 };
 
 export const getTheme = () => {
