@@ -1,26 +1,9 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import * as Colors from "../../../shared/styles/themes/colours";
 import DropZone from "../../../shared/components/navigation-bar/dropZone";
 import { Typography } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    margin: theme.spacing(1),
-  },
-  textField: {
-    maxWidth: "368px",
-    width: "100%",
-    paddingBottom: "15px",
-  },
-  checked: {
-    color: `${Colors.oceangreen} !important`,
-  },
-}));
 
 function Resume(props) {
   const [state, setState] = React.useState();
