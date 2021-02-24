@@ -53,9 +53,8 @@ function SpecialTalents(props) {
     };
     setState(skills);
 
-    if (index === state.length - 1 && !state[state.length - 1].isChecked) {
+    if (index === state.length - 1 && !skills[state.length - 1].isChecked) {
       setOther({
-        ...other,
         other: "",
         otherError: false,
         otherErrorMessage: "",
@@ -63,12 +62,11 @@ function SpecialTalents(props) {
     }
   };
 
-  const handleTextChange = (name) => (event) => {
+  const handleTextChange = () => (event) => {
     setOther({
-      ...state,
-      [name]: event.target.value,
-      [`${name}Error`]: false,
-      [`${name}ErrorMessage`]: "",
+      other: event.target.value,
+      otherError: false,
+      otherErrorMessage: "",
     });
   };
 
@@ -92,14 +90,15 @@ function SpecialTalents(props) {
   };
 
   useEffect(() => {
-    if (contributionInformation?.specialTalent?.skills) {
+    if (contributionInformation?.specialTalent?.skills || contributionInformation?.specialTalent?.otherSkills) {
       setState([...state, ...contributionInformation.specialTalent.skills]);
+      setOther({...other, other:contributionInformation.specialTalent.otherSkills});
     }
   }, [contributionInformation.specialTalent]);
 
   useEffect(() => {
     contributionInformationRef({ state, other, validateSpecialTalents });
-  }, [state]);
+  }, [other, state]);
 
   return (
     <Grid container justify={"center"}>
@@ -130,12 +129,14 @@ function SpecialTalents(props) {
           {state[state.length - 1]?.isChecked ? (
             <Grid item xs={12}>
               <TextField
-                onChange={handleTextChange("other")}
+                onChange={handleTextChange()}
                 label="Other skills you have"
                 multiline={true}
                 rowsMax={3}
                 value={other.other}
                 className={classes.textField}
+                error={other.otherError}
+                helperText={other.otherErrorMessage}
               />
             </Grid>
           ) : null}
