@@ -90,9 +90,15 @@ function SpecialTalents(props) {
   };
 
   useEffect(() => {
-    if (contributionInformation?.specialTalent?.skills || contributionInformation?.specialTalent?.otherSkills) {
+    if (
+      contributionInformation?.specialTalent?.skills ||
+      contributionInformation?.specialTalent?.otherSkills
+    ) {
       setState([...state, ...contributionInformation.specialTalent.skills]);
-      setOther({...other, other:contributionInformation.specialTalent.otherSkills});
+      setOther({
+        ...other,
+        other: contributionInformation.specialTalent.otherSkills,
+      });
     }
   }, [contributionInformation.specialTalent]);
 
