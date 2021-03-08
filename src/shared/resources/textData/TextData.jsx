@@ -55,3 +55,18 @@ export const headLineContent = [
     imagePath: Images.ImageDonate,
   },
 ];
+
+export const links = [
+  {
+    name: "Our Work",
+    path: "/OurWork",
+  },
+  {
+    name: "Get Involved",
+    path: "/Volunteer",
+  },
+  {
+    name: " Events and News",
+    path: "/EventsAndNews",
+  },
+];

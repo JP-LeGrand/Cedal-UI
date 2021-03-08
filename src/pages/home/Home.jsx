@@ -139,7 +139,7 @@ function Home(props) {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <NavigationBar homeIsActive={home.includes("home")} />
+        <NavigationBar />
       </Grid>
       <Grid container className={classes.root}>
         <Grid container className={classes.headLine}>
