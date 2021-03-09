@@ -39,6 +39,7 @@ export function register() {
       if (!isLocalhost) {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
+        cacheStaticFiles();
       } else {
         // This is running on localhost. Lets check if a service worker still exists or not.
         checkValidServiceWorker(swUrl);
@@ -109,4 +110,25 @@ export function unregister() {
       registration.unregister();
     });
   }
+}
+
+//This event listener triggers when the service worker is first installed.
+function cacheStaticFiles() {
+  //caching files as this will save the user data
+  window.addEventListener("install", function (event) {
+    event.waitUntil(
+      caches.open("Sb-Cache").then(function (cache) {
+        return cache.addAll([
+          "/src/shared/resources/Images/CedalLogo.png",
+          "/src/shared/resources/Images/Donate.jpg",
+          "/src/shared/resources/Images/Education.jpg",
+          "/src/shared/resources/Images/Girls.jpg",
+          "/src/shared/resources/Images/Health.jpg",
+          "/src/shared/resources/Images/Social.jpg",
+          "/src/shared/resources/Images/Volunteers.jpg",
+          "/public/logo.png",
+        ]);
+      })
+    );
+  });
 }
