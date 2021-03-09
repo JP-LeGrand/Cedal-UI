@@ -117,7 +117,7 @@ function cacheStaticFiles() {
   //caching files as this will save the user data
   window.addEventListener("install", function (event) {
     event.waitUntil(
-      caches.open("Sb-Cache").then(function (cache) {
+      caches.open("Cedal-Static-Cache").then(function (cache) {
         return cache.addAll([
           "/src/shared/resources/Images/CedalLogo.png",
           "/src/shared/resources/Images/Donate.jpg",
